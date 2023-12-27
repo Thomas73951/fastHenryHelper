@@ -32,6 +32,8 @@ damages, losses or liabilities whatsoever with respect to death or injury to
 person or damage to property arising from or out of the possession, use, or
 operation of Software or Licensed Program(s) by LICENSEE or its customers.
  
+Modified by Thomas Sharratt Copyright (C) 2023
+
 *//* This makes an inductor circuit out of a single impedance matrix */
 
 /* the function ReadZc returns a pointer to a linked list called 'Zlist'
@@ -211,3 +213,4 @@ FILE *fp;
 
   return Zc;
 }
+ 

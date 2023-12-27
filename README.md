@@ -1,5 +1,6 @@
 # fastHenryHelper
 
+> Compiled on SteamOS 3 (Arch Linux)
 
 ## Readoutput
 
@@ -36,3 +37,8 @@ gcc MakeLcircuit.c -o executables/makelcircuitcompiled -lm
 ./executables/makelcircuitcompiled data/Zc.mat
 ```
 
+### Output
+
+- LZ: self terms
+- KZ: mutual inductance
+- RZ/HZ & Vam: mutual resistance

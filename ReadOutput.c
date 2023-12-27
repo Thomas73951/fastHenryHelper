@@ -32,6 +32,8 @@ damages, losses or liabilities whatsoever with respect to death or injury to
 person or damage to property arising from or out of the possession, use, or
 operation of Software or Licensed Program(s) by LICENSEE or its customers.
  
+Modified by Thomas Sharratt Copyright (C) 2023
+ 
 */
 /* The following function is an example of how to read in the list of matrices
    contained in Zc.mat */
