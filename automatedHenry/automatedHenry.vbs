@@ -32,7 +32,7 @@ For Each objFile in colFiles
 
     ' collect results
     inductance = FastHenry2.GetInductance()
-    WScript.Echo "Coils"+CStr(i)+" mutual inductance is " + CStr(inductance(0, 0, 1))
+    WScript.Echo "Coils" + objFile + " mutual inductance is " + CStr(inductance(0, 0, 1))
 Next
 
 ' Quit FastHenry2 & destroy object
