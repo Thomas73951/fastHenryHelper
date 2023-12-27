@@ -1,0 +1,9 @@
+Row 1:  n1  to  n5
+Impedance matrix for frequency = 10000 1 x 1
+     0.0778325   +0.00431534j 
+Impedance matrix for frequency = 100000 1 x 1
+     0.0778325    +0.0431534j 
+Impedance matrix for frequency = 1e+06 1 x 1
+     0.0778325     +0.431534j 
+Impedance matrix for frequency = 1e+07 1 x 1
+     0.0778325      +4.31534j 

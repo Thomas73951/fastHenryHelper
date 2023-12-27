@@ -1,0 +1,15 @@
+.units mm 
+.default z = 0 sigma = 5.8e4 
+N1  x = 0  y = 0 
+N2  x = 10 y = 0 
+N3  x = 10 y = 10 
+N4  x = 0 y = 10 
+N5  x = 0  y = 1 
+E1 N1 N2 w = 0.5 h = 0.035 
+E2 N2 N3 w = 0.5 h = 0.035 
+E3 N3 N4 w = 0.5 h = 0.035 
+E4 N4 N5 w = 0.5 h = 0.035 
+.external N1 N5 
+.freq fmin = 1e4 fmax  = 1e7 ndec = 1 
+.end 
+
