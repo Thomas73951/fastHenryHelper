@@ -7,3 +7,6 @@ function saveImages()
     saveas(figHandles(i,:),imfile)
   endfor
 endfunction
+
+% function file saveImages created by Thomas Sharratt Copyright (C) 2023
+% <Created for Octave on Arch Linux>

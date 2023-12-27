@@ -1,6 +1,12 @@
 
 function [x,y] = createCoilPoints(s, id, turns, offset)
-  % offset as array [offsetX, offsetY]
+  % creates array of points, one for each node in a square coil with:
+  % s: spacing between each trace centre (gap between traces = spacing - traceWidth)
+  % id: inner diameter, square centre area with side length of id
+  % turns: number of complete turns
+  % offset: middle of coil at (0,0) by default, give as array [offsetX, offsetY] to move the centre
+  % n.b. unitless, depends on default set in .inp file frontmatter (usually mm)
+
   x = [];
   y = [];
 
@@ -18,3 +24,5 @@ function [x,y] = createCoilPoints(s, id, turns, offset)
   y = y + (offset(2) - id/2);
 endfunction
 
+% function file createCoilPoints created by Thomas Sharratt Copyright (C) 2023
+% <Created for Octave on Arch Linux>

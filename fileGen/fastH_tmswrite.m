@@ -1,5 +1,18 @@
 clear all
 close all
+clc
+
+% <Created for Octave on Arch Linux>
+% Creates a .inp file with two coils with specified:
+% spacing, inner diameter, turn count, trace width, z position, and offset.
+% .inp file is saved to WRITE_FOLDER with an name generated from parameters.
+% figures are optionally saved to images/ with SAVE_IMG = true.
+% 
+% .inp files are netlist style files read by FastHenry2 by FastFieldSolvers.
+% 
+% fastH_tmswrite.m created by Thomas Sharratt Copyright (C) 2023
+% from: fasthenry_write.m from Imperial College ELEC70101 Sensors Coursework
+
 
 WRITE_FOLDER = 'testfiles/'; % file name is auto generated
 SAVE_IMG = false;
@@ -8,16 +21,16 @@ SAVE_IMG = false;
 s = [0.4 0.1]; % spacing
 id = [4.0 0.2]; % inner diameter
 turns = [10 20]; % number of complete turns
-offset2 = [0 0]; % for coil2 (x,y)
 traceWidth = [0.2 0.03]; % trace width
 z = [0 10];
+offset2 = [0 0]; % for coil2 (x,y)
 
 N1Min = 1;
 
-% test gap size
+% test gap sizes
 gap = s - traceWidth
 if any(gap < 0)
-  error("Spacing too small or trace width too large, exiting...")
+  error("TRACES OVERLAP. Spacing too small or trace width too large, exiting...")
 endif
 
 
