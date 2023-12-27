@@ -16,6 +16,11 @@ Set OutputFile = fso.CreateTextFile("ScriptOutput.csv", True)
 For i = 1 to 5
     lineText = "file " + i + ", somedata"
     OutputFile.WriteLine(lineText)
+
+    ' ' or with write
+    ' OutputFile.Write("file ")
+    ' OutputFile.Write(i)
+    ' OutputFile.WriteLine(", somedata")
 Next
 
 ' Close text file

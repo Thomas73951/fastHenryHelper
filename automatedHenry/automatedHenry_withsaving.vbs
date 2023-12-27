@@ -4,6 +4,8 @@
 ' from: listFilesInFolder.vbs by Thomas Sharratt Copyright (C) 2023
 '       from: https://devblogs.microsoft.com/scripting/how-can-i-get-a-list-of-all-the-files-in-a-folder-and-its-subfolders/
 ' from: fhdriv.vbs in fasthenry2 (windows) / automation, file by Enrico Di Lorenzo, 2004/05/07 
+' from: writeCSV.vbs by Thomas Sharratt Copyright (C) 2023 
+'       from: https://www.tech-spy.co.uk/2021/01/list-files-in-a-folder-using-vbscript/
 
 ' FAST HENRY SETUP
 Dim FastHenry2
