@@ -1,1 +1,38 @@
 # fastHenryHelper
+
+
+## Readoutput
+
+Takes Zc.mat (in form $R + j\omega L$) and prints in form $R + jL$
+
+### To Compile:
+
+```bash
+gcc ReadOutput.c -o executables/readoutputcompiled
+```
+
+### To Run:
+
+```bash
+./executables/readoutputcompiled data/Zc.mat
+```
+
+
+## MakeLcircuit
+
+Expects one frequency in input but will take last if multiple given.
+
+### To Compile:
+
+```bash
+gcc MakeLcircuit.c -o executables/makelcircuitcompiled -lm
+```
+
+`-lm` [required to link the maths library at compile.](https://stackoverflow.com/questions/10409032/why-am-i-getting-undefined-reference-to-sqrt-error-even-though-i-include-math)
+
+### To Run:
+
+```bash
+./executables/makelcircuitcompiled data/Zc.mat
+```
+
