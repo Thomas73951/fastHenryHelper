@@ -1,5 +1,8 @@
 .vscode/
-data/
+
 *.kate-swp
-executables/
-examples/
+
+*executables/
+*data/
+*examples/
+*results/
