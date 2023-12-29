@@ -7,6 +7,8 @@
 ' from: writeCSV.vbs by Thomas Sharratt Copyright (C) 2023 
 '       from: https://www.tech-spy.co.uk/2021/01/list-files-in-a-folder-using-vbscript/
 
+' TODO: fix - it runs Zc.mat at the end cause it appears in the folder.
+
 ' FAST HENRY SETUP
 Dim FastHenry2
 ' Create FastHenry2 object
@@ -18,7 +20,7 @@ pathPos = InstrRev(Wscript.ScriptFullName, Wscript.ScriptName)
 path = left(Wscript.ScriptFullName, pathPos-1)
 ' setup folder of test files
 Set objFSO = CreateObject("Scripting.FileSystemObject")
-testFilesFolder = path + "\testfiles"
+testFilesFolder = path + "testfiles\"
 Set objFolder = objFSO.GetFolder(testFilesFolder)
 Set colFiles = objFolder.Files
 
@@ -31,20 +33,24 @@ Set OutputFile = fso.CreateTextFile("mutualinductances.csv", True)
 
 ' RUN FASTHENRY FOR EACH .inp FILE
 For Each objFile in colFiles
-    ' Wscript.Echo objFile.Name ' prints filename to console
-
-    couldRun = FastHenry2.Run("""" + testFilesFolder + objFile.name + ".inp""")
+    'WScript.Echo objFile.Name ' prints filename to console
+    filename = """" + testFilesFolder + objFile.name + """"
+    WScript.Echo "Running filename: " & filename
+    couldRun = FastHenry2.Run(filename)
 
     ' wait until finished
     Do While FastHenry2.IsRunning = True
-        script.Sleep 500
+        WScript.Sleep 500
     Loop
 
     ' collect results
     inductance = FastHenry2.GetInductance()
-    WScript.Echo "Coils" + objFile + " mutual inductance is " + CStr(inductance(0, 0, 1))
+    If Not IsNull(inductance) Then
+        ' WScript.Echo CStr(inductance(0,0,1)) ' optional print
+	End If
 
-    lineText = objFile + "," + CStr(inductance(0, 0, 1)
+    ' writes to csv.
+    lineText = objFile + "," + CStr(inductance(0, 0, 1))
     OutputFile.WriteLine(lineText)
 Next
 
@@ -54,3 +60,5 @@ Set FastHenry2 = Nothing
 
 ' Close text file
 OutputFile.Close
+
+Wscript.Echo "Finished"'
