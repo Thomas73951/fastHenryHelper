@@ -19,7 +19,7 @@ clc
 
 %% USER DEFINED >
 
-WRITE_FOLDER = 'testfile/'; % file name is auto generated
+WRITE_FOLDER = 'testfiles/'; % file name is auto generated
 SHOW_FIGURES = true; % supress figure opening, file gen only
 SAVE_IMG = false; % save figures in images folder
 USE_SUBFOLDERS = true; % puts each file into a subfolder
