@@ -16,9 +16,10 @@ clc
 % fastH_tmswrite.m created by Thomas Sharratt Copyright (C) 2023
 % from: fasthenry_write.m from Imperial College ELEC70101 Sensors Coursework
 
+
 %% USER DEFINED >
 
-WRITE_FOLDER = 'testfiles/'; % file name is auto generated TODO:mkdir
+WRITE_FOLDER = 'testfile/'; % file name is auto generated
 SHOW_FIGURES = false; % supress figure opening, file gen only
 SAVE_IMG = false; % save figures in images folder
 USE_SUBFOLDERS = true; % puts each file into a subfolder
@@ -33,8 +34,9 @@ z = [0 10];
 % set of offsets for coil2 (x,y). Creates one file for each offset pair given
 % e.g. two pairs: [0 0; 1 0]
 
+##offset2 = [0 0];
 ##offset2 = [0 0; 1 0; 2 0];
-offsetX = linspace(-5, 5, 11);
+offsetX = linspace(0, 10, 11);
 offsetY = zeros(11,1);
 offset2 = horzcat([transpose(offsetX), offsetY]);
 
@@ -47,6 +49,12 @@ N1Min = 1;
 gap = s - traceWidth
 if any(gap < 0)
   error("TRACES OVERLAP. Spacing too small or trace width too large, exiting...")
+endif
+
+% WRITE FOLDER exists?
+if (!exist(WRITE_FOLDER))
+  disp("WRITE_FOLDER directory doesn't exist, creating...")
+  mkdir(WRITE_FOLDER);
 endif
 
 
@@ -125,6 +133,6 @@ for iterINP = 1:size(offset2, 1)
 endfor
 
 % save all figures
-if (SAVE_IMG)
+if (SAVE_IMG && SHOW_FIGURES)
   saveImages();
 endif
