@@ -32,27 +32,40 @@ Set fso = CreateObject("Scripting.FileSystemObject")
 Set OutputFile = fso.CreateTextFile("mutualinductances.csv", True)
 
 ' RUN FASTHENRY FOR EACH .inp FILE
-For Each objFile in colFiles
-    'WScript.Echo objFile.Name ' prints filename to console
-    filename = """" + testFilesFolder + objFile.name + """"
-    WScript.Echo "Running filename: " & filename
-    couldRun = FastHenry2.Run(filename)
+TraverseFolders objFolder ' run function with root folder
 
-    ' wait until finished
-    Do While FastHenry2.IsRunning = True
-        WScript.Sleep 500
-    Loop
+Function TraverseFolders(fldr) 
+    ' looks through all subfolders of root folder and prints all filenames 
+    Set colFiles = fldr.Files
+    For Each objFile in colFiles
+        'WScript.Echo objFile.Name ' prints filename to console
+        If Not objFile.name = "Zc.mat" Then
+            filename = """" + fldr + "\" + objFile.name + """"
+            WScript.Echo "Running filename: " & filename
+            couldRun = FastHenry2.Run(filename)
 
-    ' collect results
-    inductance = FastHenry2.GetInductance()
-    If Not IsNull(inductance) Then
-        ' WScript.Echo CStr(inductance(0,0,1)) ' optional print
-	End If
+            ' wait until finished
+            Do While FastHenry2.IsRunning = True
+                WScript.Sleep 500
+            Loop
 
-    ' writes to csv.
-    lineText = objFile + "," + CStr(inductance(0, 0, 1))
-    OutputFile.WriteLine(lineText)
-Next
+            ' collect results
+            inductance = FastHenry2.GetInductance()
+            If IsNull(inductance) Then
+                Wscript.Echo "Error, FastHenry not run correctly, inductance is NULL"
+            End If
+
+            ' writes to csv.
+            lineText = objFile.name + "," + CStr(inductance(0, 0, 1))
+            OutputFile.WriteLine(lineText)
+        End If
+    Next
+
+  For Each sf In fldr.SubFolders
+    TraverseFolders sf ' recursive call of subfolders
+  Next
+
+End Function
 
 ' Quit FastHenry2 & destroy object
 FastHenry2.Quit
