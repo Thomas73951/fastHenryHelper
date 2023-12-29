@@ -7,9 +7,9 @@ clc
 % spacing, inner diameter, turn count, trace width, z position, and offset.
 % .inp file is saved to WRITE_FOLDER with an name generated from parameters.
 % figures are optionally saved to images/ with SAVE_IMG = true.
-% 
+%
 % .inp files are netlist style files read by FastHenry2 by FastFieldSolvers.
-% 
+%
 % fastH_tmswrite.m created by Thomas Sharratt Copyright (C) 2023
 % from: fasthenry_write.m from Imperial College ELEC70101 Sensors Coursework
 
@@ -37,7 +37,7 @@ endif
 %% fasthenry "frontmatter"
 fileName = ['fh_C1_T', num2str(turns(1)), '_ID', num2str(id(1)), '_S', num2str(s(1)), ...
             '_C2_T', num2str(turns(2)), '_ID', num2str(id(2)), '_S', num2str(s(2)), ...
-            '_O' num2str(offset2(1)), ',', num2str(offset2(2)), '.inp']
+            '_O' num2str(offset2(1)), '.', num2str(offset2(2)), '.inp']
 file = fopen([WRITE_FOLDER, fileName],'wt');
 
 fprintf(file, horzcat('* Fasthenry file "', fileName, '" generated from fastH_tmswrite.m\n'));
