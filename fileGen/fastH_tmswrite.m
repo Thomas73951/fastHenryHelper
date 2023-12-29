@@ -20,7 +20,7 @@ clc
 %% USER DEFINED >
 
 WRITE_FOLDER = 'testfile/'; % file name is auto generated
-SHOW_FIGURES = false; % supress figure opening, file gen only
+SHOW_FIGURES = true; % supress figure opening, file gen only
 SAVE_IMG = false; % save figures in images folder
 USE_SUBFOLDERS = true; % puts each file into a subfolder
 
@@ -93,7 +93,8 @@ for iterINP = 1:size(offset2, 1)
     xlim([(min(x1) - 1), (max(x1) + 1)])
     ylim([(min(y1) - 1), (max(y1) + 1)])
     legend('FontSize',11)
-    title(['Coil 1 (z = ', num2str(z(1)), ') [dimensions in mm]'])
+    title(['Coil 1, z = ', num2str(z(1)), ', W = ', num2str(traceWidth(1)), ...
+           ' [dimensions in mm]'])
   endif
   % turn set of x,y values into fasthenry nodes
   N1Max = size(x1,2);
@@ -115,9 +116,9 @@ for iterINP = 1:size(offset2, 1)
     xlim([(min(x2) - 0.1), (max(x2) + 0.1)])
     ylim([(min(y2) - 0.1), (max(y2) + 0.1)])
     legend('FontSize',11)
-    title(['Coil 2 (z = ', num2str(z(2)), ', Offset=(', ...
-           num2str(offset2(iterINP,1)), ',', num2str(offset2(iterINP,2)), ...
-           ')) [dimensions in mm]'])
+    title(['Coil 2, z = ', num2str(z(2)), ', W = ', num2str(traceWidth(2)), ...
+           ', Offset=(', num2str(offset2(iterINP,1)), ',', ...
+           num2str(offset2(iterINP,2)), ') [dimensions in mm]'])
   endif
   % turn set of x,y values into fasthenry nodes
   N2Max = N1Max + size(x2,2);
