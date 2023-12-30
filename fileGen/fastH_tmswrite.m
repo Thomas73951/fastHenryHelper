@@ -33,7 +33,6 @@ z = [0 10];
 
 % set of offsets for coil2 (x,y). Creates one file for each offset pair given
 % e.g. two pairs: [0 0; 1 0]
-
 ##offset2 = [0 0];
 ##offset2 = [0 0; 1 0; 2 0];
 offsetX = linspace(0, 10, 11);
@@ -68,7 +67,7 @@ for iterINP = 1:size(offset2, 1)
     subfolder = ['Offset_', ...
                  num2str(offset2(iterINP,1)), ',', num2str(offset2(iterINP,2))];
     if (!exist([WRITE_FOLDER, subfolder, '/']))
-      mkdir(WRITE_FOLDER, subfolder);
+      mkdir(WRITE_FOLDER, subfolder); % create subfolder if doesnt exist
     endif
     file = fopen([WRITE_FOLDER, subfolder, '/', fileName],'wt');
   else
@@ -78,7 +77,7 @@ for iterINP = 1:size(offset2, 1)
   fprintf(file, horzcat('* Fasthenry file "', fileName, ...
                         '" generated from fastH_tmswrite.m\n'));
   fprintf(file, '.units mm\n');
-  fprintf(file, '.default sigma = 5.8e4 w = 0.5 h = 0.035\n'); % Z always specified.
+  fprintf(file, '.default sigma = 5.8e4 w = 0.5 h = 0.035\n');
 
 
   %% COIL 1
