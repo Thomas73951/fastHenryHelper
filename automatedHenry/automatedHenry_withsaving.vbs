@@ -7,7 +7,6 @@
 ' from: writeCSV.vbs by Thomas Sharratt Copyright (C) 2023 
 '       from: https://www.tech-spy.co.uk/2021/01/list-files-in-a-folder-using-vbscript/
 
-' TODO: fix - it runs Zc.mat at the end cause it appears in the folder.
 
 ' FAST HENRY SETUP
 Dim FastHenry2
@@ -39,7 +38,7 @@ Function TraverseFolders(fldr)
     Set colFiles = fldr.Files
     For Each objFile in colFiles
         'WScript.Echo objFile.Name ' prints filename to console
-        If Not objFile.name = "Zc.mat" Then
+        If Not objFile.name = "Zc.mat" Then ' checks file isn't Zc.mat
             filename = """" + fldr + "\" + objFile.name + """"
             WScript.Echo "Running filename: " & filename
             couldRun = FastHenry2.Run(filename)
@@ -56,7 +55,10 @@ Function TraverseFolders(fldr)
             End If
 
             ' writes to csv.
-            lineText = objFile.name + "," + CStr(inductance(0, 0, 1))
+            L1 = CStr(inductance(1, 0, 0))
+            L2 = CStr(inductance(0, 1, 0))
+            M = CStr(inductance(0, 0, 1))
+            lineText = objFile.name & "," & L1 & "," & L2 & "," & M
             OutputFile.WriteLine(lineText)
         End If
     Next
