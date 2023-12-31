@@ -40,10 +40,15 @@ freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all 
 offsetX = linspace(0, 10, 11);
 offsetY = zeros(11,1);
 offset2 = horzcat([transpose(offsetX), offsetY]);
+
+OFFSET_DP = 4; % accuracy of offset
 % < END OF user defined
 
 numOffsets = size(offset2, 1)
 N1Min = 1;
+logMaxOffset = floor(log10(max(max(offset2))))
+offsetFormat = ["%0", num2str(logMaxOffset + 2 + OFFSET_DP), ...
+                ".", num2str(OFFSET_DP), "f"]
 
 % test gap sizes
 gap = s - traceWidth
@@ -104,10 +109,10 @@ for iterINP = 1:numOffsets
   %% fasthenry "frontmatter"
   fileName = ['fh_C1_T', num2str(turns(1)), '_ID', num2str(id(1)), '_S', num2str(s(1)), ...
               '_C2_T', num2str(turns(2)), '_ID', num2str(id(2)), '_S', num2str(s(2)), ...
-              '_O' num2str(offset2(iterINP,1)), '.', num2str(offset2(iterINP,2)), '.inp']
+              '_O' num2str(offset2(iterINP,1)), '_', num2str(offset2(iterINP,2)), '.inp']
   if (USE_SUBFOLDERS)
-    subfolder = ['Offset_', ...
-                 num2str(offset2(iterINP,1)), ',', num2str(offset2(iterINP,2))];
+    subfolder = ['Offset,', ...
+                 num2str(offset2(iterINP,1), offsetFormat), ',', num2str(offset2(iterINP,2), offsetFormat)];
     if (!exist([WRITE_FOLDER, subfolder, '/']))
       mkdir(WRITE_FOLDER, subfolder); % create subfolder if doesnt exist
     endif
