@@ -31,6 +31,7 @@ id = [4.0 0.2]; % inner diameter
 turns = [10 20]; % number of complete turns
 traceWidth = [0.2 0.03]; % trace width
 z = [0 10];
+freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all files)
 
 % set of offsets for coil2 (x,y). Creates one file for each offset pair given
 % e.g. two pairs: [0 0; 1 0]
@@ -168,7 +169,7 @@ for iterINP = 1:numOffsets
 
 
   % fasthenry "endmatter"
-  fprintf(file, '.freq fmin = 1e4 fmax  = 1e7 ndec = 1\n');
+  fprintf(file, ['.freq ', freqSweep, '\n']);
   fprintf(file, '.end\n');
   fclose(file);
 endfor
