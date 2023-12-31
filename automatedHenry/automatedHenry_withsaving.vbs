@@ -28,7 +28,8 @@ Dim fso, OutputFile
 ' Create a FileSystemObject  
 Set fso = CreateObject("Scripting.FileSystemObject")
 ' Create text file to output test data
-Set OutputFile = fso.CreateTextFile("mutualinductances.csv", True)
+outputFileName = testFilesFolder + "inductances.csv"
+Set OutputFile = fso.CreateTextFile(outputFileName, True)
 
 WScript.Echo "Setup complete, running..."
 
