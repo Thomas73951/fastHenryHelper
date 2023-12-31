@@ -41,14 +41,15 @@ offsetX = linspace(0, 10, 11);
 offsetY = zeros(11,1);
 offset2 = horzcat([transpose(offsetX), offsetY]);
 
-OFFSET_DP = 4; % accuracy of offset
+OFFSET_DP = 4; % accuracy of offset in decimal places
 % < END OF user defined
 
 numOffsets = size(offset2, 1)
 N1Min = 1;
-logMaxOffset = floor(log10(max(max(offset2))))
-offsetFormat = ["%0", num2str(logMaxOffset + 2 + OFFSET_DP), ...
-                ".", num2str(OFFSET_DP), "f"]
+% format for num2str, gives right padding
+maxNumDigits = floor(log10(max(max(offset2)))) + 1; % num of digits of max value
+offsetFormat = ["%0", num2str(maxNumDigits + 1 + OFFSET_DP), ...
+                ".", num2str(OFFSET_DP), "f"];
 
 % test gap sizes
 gap = s - traceWidth
