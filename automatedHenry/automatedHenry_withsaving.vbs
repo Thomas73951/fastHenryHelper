@@ -30,6 +30,8 @@ Set fso = CreateObject("Scripting.FileSystemObject")
 ' Create text file to output test data
 Set OutputFile = fso.CreateTextFile("mutualinductances.csv", True)
 
+WScript.Echo "Setup complete, running..."
+
 ' RUN FASTHENRY FOR EACH .inp FILE
 TraverseFolders objFolder ' run function with root folder
 
@@ -40,7 +42,7 @@ Function TraverseFolders(fldr)
         'WScript.Echo objFile.Name ' prints filename to console
         If Not objFile.name = "Zc.mat" Then ' checks file isn't Zc.mat
             filename = """" + fldr + "\" + objFile.name + """"
-            WScript.Echo "Running filename: " & filename
+            ' WScript.Echo "Running filename: " & filename
             couldRun = FastHenry2.Run(filename)
 
             ' wait until finished
@@ -54,11 +56,14 @@ Function TraverseFolders(fldr)
                 Wscript.Echo "Error, FastHenry not run correctly, inductance is NULL"
             End If
 
-            ' writes to csv.
-            L1 = CStr(inductance(1, 0, 0))
-            L2 = CStr(inductance(0, 1, 0))
-            M = CStr(inductance(0, 0, 1))
-            lineText = objFile.name & "," & L1 & "," & L2 & "," & M
+            ' writes to csv. See fasthenry help on windows for details
+            ' inductance(a, b, c) 
+            ' a is frequency number from file
+            ' b,c are Zc row/col
+            L1 = CStr(inductance(0, 0, 0))
+            L2 = CStr(inductance(0, 1, 1))
+            M = CStr(inductance(0, 1, 0)) ' for 2 coils is the same as (0, (0, 1))
+            lineText = objFile.name & "," & L1 & "," & L2 & "," & M & "," & L4
             OutputFile.WriteLine(lineText)
         End If
     Next
