@@ -23,6 +23,7 @@ WRITE_FOLDER = 'testfiles/'; % file name is auto generated
 SHOW_FIGURES = true; % supress figure opening, file gen only
 SAVE_IMG = false; % save figures in images folder
 USE_SUBFOLDERS = true; % puts each file into a subfolder
+CREATE_OFFSET_SWEEP_DETAILS_CSV = true; % creates file for plottingHenry to read
 
 % units in mm.
 s = [0.4 0.1]; % spacing
@@ -38,10 +39,9 @@ z = [0 10];
 offsetX = linspace(0, 10, 11);
 offsetY = zeros(11,1);
 offset2 = horzcat([transpose(offsetX), offsetY]);
-
 % < END OF user defined
 
-
+numOffsets = size(offset2, 1)
 N1Min = 1;
 
 % test gap sizes
@@ -56,9 +56,50 @@ if (!exist(WRITE_FOLDER))
   mkdir(WRITE_FOLDER);
 endif
 
+% Create offset sweep details file
+if (CREATE_OFFSET_SWEEP_DETAILS_CSV)
+  if (numOffsets == 1) % only one offset pair
+    disp("Not creating sweepdetails.csv. No sweep found - only one offset pair")
+  else
+    % create file
+    file = fopen([WRITE_FOLDER, "sweepdetails.csv"], 'wt');
+
+    % determine sweep type
+    firstX = offset2(1,1);
+    firstY = offset2(1,2);
+    sweepX = false;
+    sweepY = false;
+
+    if (any(offset2(:,1)) != firstX) % any not the same as first = sweep in x
+      sweepX = true;
+    endif
+    if (any(offset2(:,2)) != firstY) % any not the same as first = sweep in y
+      sweepY = true;
+    endif
+
+    % write sweep type to file
+    if (sweepX & sweepY)
+      fprintf(file, "1, 1\n");
+    elseif (sweepX)
+      fprintf(file, "1, 0\n");
+    elseif (sweepY)
+      fprintf(file, "0, 1\n");
+    else
+      error("NO SWEEP TYPE. Multiple offset pairs found but sweep unknown.")
+    endif
+
+    % write offset values to file
+    fprintf(file, "\n");
+    for i = 1:numOffsets
+      fprintf(file, [num2str(offset2(i,1)), ",", num2str(offset2(i,2)), "\n"]);
+    endfor
+    fclose(file);
+  endif
+endif
+
 
 % Create .inp files
-for iterINP = 1:size(offset2, 1)
+for iterINP = 1:numOffsets
   %% fasthenry "frontmatter"
   fileName = ['fh_C1_T', num2str(turns(1)), '_ID', num2str(id(1)), '_S', num2str(s(1)), ...
               '_C2_T', num2str(turns(2)), '_ID', num2str(id(2)), '_S', num2str(s(2)), ...
