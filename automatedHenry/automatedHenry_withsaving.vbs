@@ -19,7 +19,7 @@ pathPos = InstrRev(Wscript.ScriptFullName, Wscript.ScriptName)
 path = left(Wscript.ScriptFullName, pathPos-1)
 ' setup folder of test files
 Set objFSO = CreateObject("Scripting.FileSystemObject")
-testFilesFolder = path + "testfiles\"
+testFilesFolder = path + "testfiles\offsetcoils\"
 Set objFolder = objFSO.GetFolder(testFilesFolder)
 Set colFiles = objFolder.Files
 
@@ -31,6 +31,14 @@ Set fso = CreateObject("Scripting.FileSystemObject")
 outputFileName = testFilesFolder + "inductances.csv"
 Set OutputFile = fso.CreateTextFile(outputFileName, True)
 
+' REGEX - INP FILES ONLY
+Set regexINP = New RegExp
+With regexINP
+    .Pattern = ".*inp"
+    .IgnoreCase = True
+    .Global = True
+End With
+
 WScript.Echo "Setup complete, running..."
 
 ' RUN FASTHENRY FOR EACH .inp FILE
@@ -41,7 +49,7 @@ Function TraverseFolders(fldr)
     Set colFiles = fldr.Files
     For Each objFile in colFiles
         'WScript.Echo objFile.Name ' prints filename to console
-        If Not objFile.name = "Zc.mat" Then ' checks file isn't Zc.mat
+        If regexINP.Test(objFile.name) Then ' checks file is .inp
             filename = """" + fldr + "\" + objFile.name + """"
             ' WScript.Echo "Running filename: " & filename
             couldRun = FastHenry2.Run(filename)
@@ -82,4 +90,4 @@ Set FastHenry2 = Nothing
 ' Close text file
 OutputFile.Close
 
-Wscript.Echo "Finished"'
+Wscript.Echo "Finished"
