@@ -8,12 +8,12 @@ clc
 % Offset as matrix of x rows of x,y value pairs.
 % One to generate one file, multiple rows for multiple files generated.
 % .inp file is saved to WRITE_FOLDER with an name generated from parameters,
-% and optionally each file is put into its own subfolder... 
+% and optionally each file is put into its own subfolder...
 % (due to how fastHenry saves Zc.mat, overwritten otherwise)
 % figures are optionally saved to images/ with SAVE_IMG = true.
 %
 % .inp files are netlist style files read by FastHenry2 by FastFieldSolvers.
-% 
+%
 % Uses function files: createCoilPoints.m, EPrint.m, nodePrint.m, saveImages.m
 %
 % fastH_tmswrite.m created by Thomas Sharratt Copyright (C) 2024
@@ -38,9 +38,16 @@ freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all 
 % e.g. two pairs: [0 0; 1 0]
 ##offset2 = [0 0];
 ##offset2 = [0 0; 1 0; 2 0];
-offsetX = linspace(0, 10, 11);
-offsetY = zeros(11,1);
-offset2 = horzcat([transpose(offsetX), offsetY]);
+##offsetX = linspace(0, 100, 101); % x sweep
+##offsetY = zeros(size(offsetX, 2),1);
+##offset2 = horzcat([transpose(offsetX), offsetY]);
+##offsetY = linspace(0, 10, 11); % y sweep
+##offsetX = zeros(size(offsetY, 2),1);
+##offset2 = horzcat([offsetX, transpose(offsetY)]);
+
+offsetX = linspace(0, 10, 11); % x sweep
+offsetY = linspace(0, 10, 11);
+offset2 = horzcat([transpose(offsetX), transpose(offsetY)]);
 
 OFFSET_DP = 1; % accuracy of offset in decimal places
 % < END OF user defined
