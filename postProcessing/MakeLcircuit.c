@@ -73,6 +73,16 @@ int row, col;
   exit(1);
 }
 
+/// @brief prints array to console
+void printZ(CX **Z, int size)
+{
+  for(int i=0; i < size; i++) {
+    for(int j = 0; j < size; j++) {
+      printf("Z_%d_%d %lg + j%lg\n", i, j, Z[i][j].real, Z[i][j].imag);
+    }
+  }
+}
+
 void main(argc, argv)
 int argc;
 char *argv[];
@@ -112,27 +122,31 @@ char *argv[];
       /* divide out freq */
       Z[i][j].imag = Z[i][j].imag/(2*PI*freq);
 
+  printZ(Z, size);
   /* symmetrize it */
   for(i = 1; i < size; i++)
     for(j = 0; j < i; j++) {
       Z[i][j].real = Z[j][i].real = (Z[i][j].real + Z[j][i].real)/2.0;
       Z[i][j].imag = Z[j][i].imag = (Z[i][j].imag + Z[j][i].imag)/2.0;
     }
+  printZ(Z, size);
 
   intnode = 2;
   /* self terms */
   for(i = 0; i < size; i++) {
-/*    printf("rZ_%d %d int_node%d %lg\n",i,2*i+1,intnode,Z[i][i].real);*/
+    printf("rZ_%d %d int_node%d %lg\n",i,2*i+1,intnode,Z[i][i].real);
     printf("LZ_%d %d int_node%d_%d %lg\n",i,i*2+1,i,intnode,
 	   Z[i][i].imag);
-/*    printf("Vam_%d int_node%d_%d %d dc=0v\n",i,i,size+intnode,i*2+2);*/
+    printf("Vam_%d int_node%d_%d %d dc=0v\n",i,i,size+intnode,i*2+2);
   }
   
   /* mutual inductance */
   for(i = 1; i < size; i++)
-    for(j = 0; j < i; j++)
+    for(j = 0; j < i; j++) {
+      printf("M_%d_%d %lg\n", i, j, Z[i][j].imag);
       printf("KZ_%d_%d LZ_%d LZ_%d %lg\n",i,j,i,j,
 	     Z[i][j].imag/sqrt(Z[i][i].imag * Z[j][j].imag));
+    }
       
   intnode = 2;
   /* mutual resistance */
