@@ -19,16 +19,24 @@ SAVE_IMG = false; % save figures in images folder
 
 %% Read csv file
 data = csvread([READ_FOLDER, FILE_NAME_INDUCTANCES]);
-L1 = data(:,2);
-L2 = data(:,3);
-M = data(:,4);
+sweepX = data(:,2); % requires comma separated folder name: ".../Offset,x,y/"
+sweepY = data(:,3);
+L1 = data(:,5);
+L2 = data(:,6);
+M = data(:,7);
 
-%% Manipulate file
-sweepData = csvread([READ_FOLDER, FILE_NAME_SWEEP]);
+% calculate coupling factor (k)
+k = M ./ sqrt(L1.*L2);
 
-sweepType = sweepData(1,:); % first row only
-sweepX = sweepData(2:end,1);
-sweepY = sweepData(2:end,2);
+% determine sweep type
+sweepType = [0, 0];
+if (any(sweepX) != sweepX(1)) % any not the same as first => sweep in x
+  sweepType(1,1) = 1;
+endif
+
+if (any(sweepY) != sweepY(1)) % any not the same as first => sweep in y
+  sweepType(1,2) = 1;
+endif
 
 if (sweepType == [1,1])
   error("2D SWEEP, currently unsuported")
@@ -39,10 +47,10 @@ elseif (sweepType == [1,0]) % x sweep
 elseif (sweepType == [0,1]) % y sweep
   sweepVar = sweepY;
   sweepAxis = "y";
+else
+  error("NO SWEEP FOUND. Cannot plot over single point")
 endif
 
-% calculate coupling factor (k)
-k = M ./ sqrt(L1.*L2);
 
 %% Plotting
 % L1
