@@ -1,6 +1,6 @@
 ' Test Regex usage in VBScript
 '
-' Created by Thomas Sharratt Copyright (C) 2023
+' Created by Thomas Sharratt Copyright (C) 2024
 
 
 

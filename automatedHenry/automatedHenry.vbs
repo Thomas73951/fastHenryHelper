@@ -1,5 +1,5 @@
-' List files from sub directory (testfiles) to terminal.
-'
+' SUPERSEDED BY automatedHenry_withsaving.vbs
+' 
 ' Created by Thomas Sharratt Copyright (C) 2023
 ' from: listFilesInFolder.vbs by Thomas Sharratt Copyright (C) 2023
 '       from: https://devblogs.microsoft.com/scripting/how-can-i-get-a-list-of-all-the-files-in-a-folder-and-its-subfolders/

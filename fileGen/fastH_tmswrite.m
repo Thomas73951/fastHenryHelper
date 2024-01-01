@@ -6,21 +6,23 @@ clc
 % Creates a .inp file with two coils with specified:
 % spacing, inner diameter, turn count, trace width, z position, and offset.
 % Offset as matrix of x rows of x,y value pairs.
-% One for one file, multiple rows for multiple files generated.
+% One to generate one file, multiple rows for multiple files generated.
 % .inp file is saved to WRITE_FOLDER with an name generated from parameters,
-% and optionally each file is put into its own subfolder (due to how Zc.mat is made)
+% and optionally each file is put into its own subfolder... 
+% (due to how fastHenry saves Zc.mat, overwritten otherwise)
 % figures are optionally saved to images/ with SAVE_IMG = true.
 %
 % .inp files are netlist style files read by FastHenry2 by FastFieldSolvers.
+% 
+% Uses function files: createCoilPoints.m, EPrint.m, nodePrint.m, saveImages.m
 %
-% fastH_tmswrite.m created by Thomas Sharratt Copyright (C) 2023
+% fastH_tmswrite.m created by Thomas Sharratt Copyright (C) 2024
 % from: fasthenry_write.m from Imperial College ELEC70101 Sensors Coursework
 
 
 %% USER DEFINED >
-
-WRITE_FOLDER = 'testfiles/'; % file name is auto generated
-SHOW_FIGURES = true; % supress figure opening, file gen only
+WRITE_FOLDER = 'testfiles/offsetcoils/'; % file name is auto generated
+SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
 USE_SUBFOLDERS = true; % puts each file into a subfolder
 
@@ -40,9 +42,10 @@ offsetX = linspace(0, 10, 11);
 offsetY = zeros(11,1);
 offset2 = horzcat([transpose(offsetX), offsetY]);
 
-OFFSET_DP = 4; % accuracy of offset in decimal places
+OFFSET_DP = 1; % accuracy of offset in decimal places
 % < END OF user defined
 
+% Setup bits
 numOffsets = size(offset2, 1)
 N1Min = 1;
 % format for num2str, gives right padding
@@ -50,7 +53,7 @@ maxNumDigits = floor(log10(max(max(offset2)))) + 1; % num of digits of max value
 offsetFormat = ["%0", num2str(maxNumDigits + 1 + OFFSET_DP), ...
                 ".", num2str(OFFSET_DP), "f"];
 
-% test gap sizes
+% test size of gap between adjacent traces in coil
 gap = s - traceWidth
 if any(gap < 0)
   error("TRACES OVERLAP. Spacing too small or trace width too large, exiting...")
@@ -63,7 +66,7 @@ if (!exist(WRITE_FOLDER))
 endif
 
 
-% Create .inp files
+%% Create .inp file(s)
 for iterINP = 1:numOffsets
   %% fasthenry "frontmatter"
   fileName = ['fh_C1_T', num2str(turns(1)), '_ID', num2str(id(1)), '_S', num2str(s(1)), ...
@@ -84,7 +87,7 @@ for iterINP = 1:numOffsets
   fprintf(file, horzcat('* Fasthenry file "', fileName, ...
                         '" generated from fastH_tmswrite.m\n'));
   fprintf(file, '.units mm\n');
-  fprintf(file, '.default sigma = 5.8e4 w = 0.5 h = 0.035\n');
+  fprintf(file, '.default sigma = 5.8e4 h = 0.035\n');
 
 
   %% COIL 1

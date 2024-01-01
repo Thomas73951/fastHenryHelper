@@ -3,17 +3,17 @@ close all
 clc
 
 % <Created for Octave on Arch Linux>
-% TODO: DESCRIPTION
+% Plotting for fastHenry results in csv file created by fasthenryhelper/automatedhenry/
+% Requires a sweep over an offset direction.
 %
+% Uses function file: saveImages.m
 %
-%
-% plottingHenry.m created by Thomas Sharratt Copyright (C) 2023
+% plottingHenry.m created by Thomas Sharratt Copyright (C) 2024
 
 
 %% USER DEFINED >
-READ_FOLDER = "results/";
+READ_FOLDER = "results/offsetcoils/";
 FILE_NAME_INDUCTANCES = "inductances.csv";
-FILE_NAME_SWEEP = "sweepdetails.csv";
 SAVE_IMG = false; % save figures in images folder
 % < END OF user defined
 
