@@ -1,5 +1,7 @@
 # Post Processing
 
+**DEPRECATED, FUNCTIONALITY IMPLEMENTED INTO `automatedHenry` & `plottingHenry`.**
+
 > Compiled on SteamOS 3 (Arch Linux)
 
 ## Readoutput
