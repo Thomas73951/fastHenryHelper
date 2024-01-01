@@ -64,7 +64,7 @@ Function TraverseFolders(fldr)
             L1 = CStr(inductance(0, 0, 0))
             L2 = CStr(inductance(0, 1, 1))
             M = CStr(inductance(0, 1, 0)) ' for 2 coils is the same as (0, (0, 1))
-            lineText = objFile.name & "," & L1 & "," & L2 & "," & M & "," & L4
+            lineText = fldr & "," & objFile.name & "," & L1 & "," & L2 & "," & M
             OutputFile.WriteLine(lineText)
         End If
     Next
