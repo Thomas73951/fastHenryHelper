@@ -12,9 +12,10 @@ clc
 
 
 %% USER DEFINED >
-READ_FOLDER = "results/offsetcoils/";
+READ_FOLDER = "results/offsetcoils-xy-0-10-11/";
 FILE_NAME_INDUCTANCES = "inductances.csv";
 SAVE_IMG = false; % save figures in images folder
+PLT_LINE_STYLE = "-x";
 % < END OF user defined
 
 %% Read csv file
@@ -38,8 +39,10 @@ if (any(sweepY) != sweepY(1)) % any not the same as first => sweep in y
   sweepType(1,2) = 1;
 endif
 
+sweep2D = false;
 if (sweepType == [1,1])
-  error("2D SWEEP, currently unsuported")
+  % error("2D SWEEP, currently unsuported")
+  sweep2D = true;
   % 2d sweep, unsupported rn.
 elseif (sweepType == [1,0]) % x sweep
   sweepVar = sweepX;
@@ -57,47 +60,69 @@ endif
 figure(1)
 grid
 hold
-plot(sweepVar, L1, '-x', 'DisplayName', 'L1')
-legend('FontSize',11)
-xlim([sweepVar(1), sweepVar(end)])
-xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
-ylabel("Inductance [H]")
-title(['L1 (reader) Swept Over ', sweepAxis, '-axis'])
+if (sweep2D)
+  plot3(sweepX, sweepY, L1, 'x')
+  view(3)
+else
+  plot(sweepVar, L1, PLT_LINE_STYLE, 'DisplayName', 'L1')
+  xlim([sweepVar(1), sweepVar(end)])
+  legend('FontSize',11)
+  xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
+  ylabel("Inductance [H]")
+  title(['L1 (reader) Swept Over ', sweepAxis, '-axis'])
+endif
+
 
 % L2
 figure(2)
 grid
 hold
-plot(sweepVar, L2, '-x', 'DisplayName', 'L2')
-legend('FontSize',11)
-xlim([sweepVar(1), sweepVar(end)])
-xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
-ylabel("Inductance [H]")
-title(['L2 (tag) Swept Over ', sweepAxis, '-axis'])
+if (sweep2D)
+  plot3(sweepX, sweepY, L2, 'x')
+  view(3)
+else
+  plot(sweepVar, L2, PLT_LINE_STYLE, 'DisplayName', 'L2')
+  xlim([sweepVar(1), sweepVar(end)])
+  legend('FontSize',11)
+  xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
+  ylabel("Inductance [H]")
+  title(['L2 (tag) Swept Over ', sweepAxis, '-axis'])
+endif
 
 
 % M
 figure(3)
 grid
 hold
-plot(sweepVar, M, '-x', 'DisplayName', 'M')
-legend('FontSize',11)
-xlim([sweepVar(1), sweepVar(end)])
-xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
-ylabel("Inductance [H]")
-title(['Mutual Inductance Swept Over ', sweepAxis, '-axis'])
+if (sweep2D)
+  plot3(sweepX, sweepY, M, 'x')
+  view(3)
+else
+  plot(sweepVar, M, PLT_LINE_STYLE, 'DisplayName', 'M')
+  xlim([sweepVar(1), sweepVar(end)])
+  legend('FontSize',11)
+  xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
+  ylabel("Inductance [H]")
+  title(['Mutual Inductance Swept Over ', sweepAxis, '-axis'])
+endif
+
 
 
 % K
 figure(4)
 grid
 hold
-plot(sweepVar, k, '-x', 'DisplayName', 'k')
-legend('FontSize',11)
-xlim([sweepVar(1), sweepVar(end)])
-xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
-ylabel("Coupling Factor []")
-title(['Coupling Factor (k) Swept Over ', sweepAxis, '-axis'])
+if (sweep2D)
+  plot3(sweepX, sweepY, k, 'x')
+  view(3)
+else
+  plot(sweepVar, k, PLT_LINE_STYLE, 'DisplayName', 'k')
+  xlim([sweepVar(1), sweepVar(end)])
+  legend('FontSize',11)
+  xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
+  ylabel("Coupling Factor []")
+  title(['Coupling Factor (k) Swept Over ', sweepAxis, '-axis'])
+endif
 
 %% save figures?
 if (SAVE_IMG)
