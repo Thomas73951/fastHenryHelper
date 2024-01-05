@@ -21,7 +21,7 @@ clc
 
 
 %% USER DEFINED >
-WRITE_FOLDER = 'testfiles/offsetcoils/'; % file name is auto generated
+WRITE_FOLDER = ['testfiles', filesep, 'offsetcoils', filesep, 'offset-y-0-20-101', filesep]; % file name is auto generated
 SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
 USE_SUBFOLDERS = true; % puts each file into a subfolder
@@ -83,10 +83,10 @@ for iterINP = 1:numOffsets
     subfolder = ['Offset,', num2str(offset2(iterINP,1), offsetFormat), ...
                  ',', num2str(offset2(iterINP,2), offsetFormat)];
 
-    if (!exist([WRITE_FOLDER, subfolder, '/']))
+    if (!exist([WRITE_FOLDER, subfolder, filesep]))
       mkdir(WRITE_FOLDER, subfolder); % create subfolder if doesnt exist
     endif
-    file = fopen([WRITE_FOLDER, subfolder, '/', fileName],'wt');
+    file = fopen([WRITE_FOLDER, subfolder, filesep, fileName],'wt');
   else
     file = fopen([WRITE_FOLDER, fileName],'wt');
   endif
