@@ -15,6 +15,7 @@ clc
 READ_FOLDER = ['results', filesep]; %, 'offset-y-0-20-101', filesep];
 FILE_NAME_INDUCTANCES = "offset-x-0-20-101-z5_inductances.csv";
 SAVE_IMG = false; % save figures in images folder
+PLOT_MARKER = '-'; % global plot marker for this script
 % < END OF user defined
 
 %% Read csv file
@@ -57,7 +58,7 @@ endif
 figure(1)
 grid
 hold
-plot(sweepVar, L1, '-x', 'DisplayName', 'L1')
+plot(sweepVar, L1, PLOT_MARKER, 'DisplayName', 'L1')
 legend('FontSize',11)
 xlim([sweepVar(1), sweepVar(end)])
 xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
@@ -68,7 +69,7 @@ title(['L1 (reader) Swept Over ', sweepAxis, '-axis'])
 figure(2)
 grid
 hold
-plot(sweepVar, L2, '-x', 'DisplayName', 'L2')
+plot(sweepVar, L2, PLOT_MARKER, 'DisplayName', 'L2')
 legend('FontSize',11)
 xlim([sweepVar(1), sweepVar(end)])
 xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
@@ -80,7 +81,7 @@ title(['L2 (tag) Swept Over ', sweepAxis, '-axis'])
 figure(3)
 grid
 hold
-plot(sweepVar, M, '-x', 'DisplayName', 'M')
+plot(sweepVar, M, PLOT_MARKER, 'DisplayName', 'M')
 legend('FontSize',11)
 xlim([sweepVar(1), sweepVar(end)])
 xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
@@ -92,7 +93,7 @@ title(['Mutual Inductance Swept Over ', sweepAxis, '-axis'])
 figure(4)
 grid
 hold
-plot(sweepVar, k, '-x', 'DisplayName', 'k')
+plot(sweepVar, k, PLOT_MARKER, 'DisplayName', 'k')
 legend('FontSize',11)
 xlim([sweepVar(1), sweepVar(end)])
 xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
