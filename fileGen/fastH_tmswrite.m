@@ -22,7 +22,7 @@ clc
 
 
 %% USER DEFINED >
-WRITE_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep, 'offset-x-0-20-101-z5', filesep]; % file name is auto generated
+WRITE_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep, 'offset-test3', filesep]; % file name is auto generated
 SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
 % v puts each file into a subfolder - can only be used with multiple offset values
@@ -44,16 +44,20 @@ freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all 
 % e.g. two pairs: [0 0 5; 1 0 5] - coil2 at y=0, z=5, moves from x=0 -> x=1
 offset2 = [0 0 0];
 ##offset2 = [0 0; 1 0; 2 0];
-offsetX = linspace(0, 20, 101); % x sweep
-offsetY = zeros(size(offsetX));
-offsetZ = 5 * ones(size(offsetX));
+##offsetX = linspace(0, 20, 101); % x sweep
+##offsetY = zeros(size(offsetX));
+##offsetZ = 5 * ones(size(offsetX));
+##offset2 = transpose([offsetX; offsetY; offsetZ]);
+
+##offsetY = linspace(0, 20, 101); % y sweep
+##offsetX = zeros(size(offsetY));
+##offsetZ = 5 * ones(size(offsetX));
+##offset2 = transpose([offsetX; offsetY; offsetZ]);
+
+offsetZ = linspace(1, 21, 101); % Z sweep
+offsetX = zeros(size(offsetZ));
+offsetY = zeros(size(offsetZ));
 offset2 = transpose([offsetX; offsetY; offsetZ]);
-##offsetY = linspace(0, 20, 101); % y sweep NEEDS FIXING FOR Z ADDITION
-##offsetX = zeros(size(offsetY);
-##offset2 = horzcat([offsetX, transpose(offsetY)]);
-##offsetX = linspace(0, 10, 11); % x sweep
-##offsetY = linspace(0, 10, 11);
-##offset2 = horzcat([transpose(offsetX), transpose(offsetY)]);
 
 OFFSET_DP = 1; % accuracy of offset in decimal places
 % < END OF user defined
@@ -126,14 +130,6 @@ for iterINP = 1:numOffsets
   % connect nodes with E statments & add port connections
   file = EPrint(file, N1Min, N1Max, traceWidth(1), 'coil1');
 
-  readerXSize = max(x1) - min(x1);
-  readerYSize = max(y1) - min(y1);
-  if (readerXSize == readerYSize)
-    disp(["Reader coil measures ", num2str(readerXSize), " mm square"])
-  else
-    disp(["Reader coil measures ", num2str(readerXSize), "x", num2str(readerYSize), " mm"])
-  endif
-
 
   %% COIL 2
   N2Min = N1Max + 1;
@@ -165,6 +161,15 @@ for iterINP = 1:numOffsets
   fprintf(file, '.end\n');
   fclose(file);
 endfor
+
+% Display Coil1 size.
+readerXSize = max(x1) - min(x1);
+readerYSize = max(y1) - min(y1);
+if (readerXSize == readerYSize)
+  disp(["Reader coil measures ", num2str(readerXSize), " mm square"])
+else
+  disp(["Reader coil measures ", num2str(readerXSize), "x", num2str(readerYSize), " mm"])
+endif
 
 % save all figures
 if (SAVE_IMG && SHOW_FIGURES)
