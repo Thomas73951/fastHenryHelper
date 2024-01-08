@@ -32,7 +32,11 @@ s = [0.4 0.1]; % spacing
 id = [4.0 0.2]; % inner diameter
 turns = [10 20]; % number of complete turns
 traceWidth = [0.2 0.03]; % trace width
-z = [0 10];
+portSpacing = [1 0.1]; % x spacing of ports brought to bottom middle of coil
+% v z offset of trace to bring ports to bottom middle of coil...
+%   i.e. trace on other side of pcb therefore pcb board thickness.
+boardThickness = [-1.6 0.1];
+z = [0 5];
 freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all files)
 
 % set of offsets for coil2 (x,y). Creates one file for each offset pair given
@@ -100,7 +104,7 @@ for iterINP = 1:numOffsets
 
   %% COIL 1
   % create a set of x,y values which will form the nodes
-  [x1,y1, z1] = createCoilPoints(s(1), id(1), turns(1), [0 0 z(1)], 0);
+  [x1,y1, z1] = createCoilPoints(s(1), id(1), turns(1), [0 0 z(1)], boardThickness(1), portSpacing(1));
   % plot x,y value set
   if (SHOW_FIGURES)
     figure(iterINP*2-1)
@@ -131,7 +135,7 @@ for iterINP = 1:numOffsets
   %% COIL 2
   N2Min = N1Max + 1;
   % create a set of x,y values which will form the nodes
-  [x2,y2,z2] = createCoilPoints(s(2), id(2), turns(2), [offset2(iterINP,:), z(2)], 0);
+  [x2,y2,z2] = createCoilPoints(s(2), id(2), turns(2), [offset2(iterINP,:), z(2)], boardThickness(2), portSpacing(2));
   % plot x,y value set
   if (SHOW_FIGURES)
     figure(iterINP*2)
