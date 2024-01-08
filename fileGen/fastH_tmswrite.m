@@ -24,7 +24,8 @@ clc
 WRITE_FOLDER = 'testfiles/offsetcoils/'; % file name is auto generated
 SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
-USE_SUBFOLDERS = true; % puts each file into a subfolder
+% v puts each file into a subfolder - can only be used with multiple offset values
+USE_SUBFOLDERS = false;
 
 % units in mm.
 s = [0.4 0.1]; % spacing
@@ -79,7 +80,7 @@ for iterINP = 1:numOffsets
   fileName = ['fh_C1_T', num2str(turns(1)), '_ID', num2str(id(1)), '_S', num2str(s(1)), ...
               '_C2_T', num2str(turns(2)), '_ID', num2str(id(2)), '_S', num2str(s(2)), ...
               '_O' num2str(offset2(iterINP,1)), '_', num2str(offset2(iterINP,2)), '.inp']
-  if (USE_SUBFOLDERS)
+  if (USE_SUBFOLDERS && numOffsets > 1) % only needed for multiple offsets
     subfolder = ['Offset,', num2str(offset2(iterINP,1), offsetFormat), ...
                  ',', num2str(offset2(iterINP,2), offsetFormat)];
 
