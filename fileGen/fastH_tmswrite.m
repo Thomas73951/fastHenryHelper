@@ -21,7 +21,7 @@ clc
 
 
 %% USER DEFINED >
-WRITE_FOLDER = ['testfiles', filesep, 'offsetcoils', filesep, 'offset-y-0-20-101', filesep]; % file name is auto generated
+WRITE_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep, 'offset-x-0-20-101-z5', filesep]; % file name is auto generated
 SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
 USE_SUBFOLDERS = true; % puts each file into a subfolder

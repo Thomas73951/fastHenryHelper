@@ -12,8 +12,8 @@ clc
 
 
 %% USER DEFINED >
-READ_FOLDER = ['results', filesep, 'offset-y-0-20-101', filesep];
-FILE_NAME_INDUCTANCES = "inductances.csv";
+READ_FOLDER = ['results', filesep]; %, 'offset-y-0-20-101', filesep];
+FILE_NAME_INDUCTANCES = "offset-x-0-20-101-z5_inductances.csv";
 SAVE_IMG = false; % save figures in images folder
 % < END OF user defined
 

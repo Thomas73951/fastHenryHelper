@@ -21,6 +21,9 @@ Dim FastHenry2
 ' Create FastHenry2 object
 Set FastHenry2 = CreateObject("FastHenry2.Document")
 
+' Set folder to simulate
+coilsFolderName = "offset-x-0-20-101-z5" ' no "\"
+
 ' TEST FILE SETUP
 ' Extract script path from ScriptFullName Property
 pathPos = InstrRev(Wscript.ScriptFullName, Wscript.ScriptName)
@@ -28,7 +31,8 @@ path = left(Wscript.ScriptFullName, pathPos-1)
 ' setup folder of test files
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 testFilesFolder = path + "testfiles\offsetcoils\"
-Set objFolder = objFSO.GetFolder(testFilesFolder)
+Set objFolder = objFSO.GetFolder(testFilesFolder + coilsFolderName + "\")
+Wscript.echo objFolder
 Set colFiles = objFolder.Files
 
 ' OUTPUT FILE SETUP
@@ -36,7 +40,9 @@ Dim fso, OutputFile
 ' Create a FileSystemObject  
 Set fso = CreateObject("Scripting.FileSystemObject")
 ' Create text file to output test data
-outputFileName = testFilesFolder + "inductances.csv"
+outputFolder = path + "testfiles\"
+outputFileName = outputFolder + coilsFolderName + "_inductances.csv"
+Wscript.echo outputFileName
 Set OutputFile = fso.CreateTextFile(outputFileName, True)
 
 ' REGEX - INP FILES ONLY
