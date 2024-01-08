@@ -119,6 +119,14 @@ for iterINP = 1:numOffsets
   % connect nodes with E statments & add port connections
   file = EPrint(file, N1Min, N1Max, traceWidth(1), 'coil1');
 
+  readerXSize = max(x1) - min(x1);
+  readerYSize = max(y1) - min(y1);
+  if (readerXSize == readerYSize)
+    disp(["Reader coil measures ", num2str(readerXSize), " mm square"])
+  else
+    disp(["Reader coil measures ", num2str(readerXSize), "x", num2str(readerYSize), " mm"])
+  endif
+
 
   %% COIL 2
   N2Min = N1Max + 1;
