@@ -100,7 +100,7 @@ for iterINP = 1:numOffsets
 
   %% COIL 1
   % create a set of x,y values which will form the nodes
-  [x1,y1] = createCoilPoints(s(1), id(1), turns(1), [0 0]);
+  [x1,y1, z1] = createCoilPoints(s(1), id(1), turns(1), [0 0 z(1)], 0);
   % plot x,y value set
   if (SHOW_FIGURES)
     figure(iterINP*2-1)
@@ -115,7 +115,7 @@ for iterINP = 1:numOffsets
   endif
   % turn set of x,y values into fasthenry nodes
   N1Max = size(x1,2);
-  file = nodePrint(file, N1Min, N1Max, x1, y1, z(1));
+  file = nodePrint(file, N1Min, N1Max, x1, y1, z1);
   % connect nodes with E statments & add port connections
   file = EPrint(file, N1Min, N1Max, traceWidth(1), 'coil1');
 
@@ -131,7 +131,7 @@ for iterINP = 1:numOffsets
   %% COIL 2
   N2Min = N1Max + 1;
   % create a set of x,y values which will form the nodes
-  [x2,y2] = createCoilPoints(s(2), id(2), turns(2), offset2(iterINP,:));
+  [x2,y2,z2] = createCoilPoints(s(2), id(2), turns(2), [offset2(iterINP,:), z(2)], 0);
   % plot x,y value set
   if (SHOW_FIGURES)
     figure(iterINP*2)
@@ -147,7 +147,7 @@ for iterINP = 1:numOffsets
   endif
   % turn set of x,y values into fasthenry nodes
   N2Max = N1Max + size(x2,2);
-  file = nodePrint(file, N2Min, N2Max, x2, y2, z(2));
+  file = nodePrint(file, N2Min, N2Max, x2, y2, z2);
   % connect nodes with E statments & add port connections
   file = EPrint(file, N2Min, N2Max, traceWidth(2), 'coil2');
 

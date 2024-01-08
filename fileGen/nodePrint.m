@@ -10,7 +10,8 @@ function file = nodePrint(file, NMin, NMax, x, y, z)
   % z: single value, set for all. (coil is then flat in z axis)
 
   for i = NMin:NMax
-    fprintf(file, ['N', num2str(i), ' x = ', num2str(x(i+1-NMin)), ' y = ' num2str(y(i+1-NMin)), ' z = ' num2str(z), '\n']);
+    % n.b. iterator ^ is like this for node number but needs offsetting for x,y,z indices
+    fprintf(file, ['N', num2str(i), ' x = ', num2str(x(i+1-NMin)), ' y = ' num2str(y(i+1-NMin)), ' z = ' num2str(z(i+1-NMin)), '\n']);
   endfor
 endfunction
 
