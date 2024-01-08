@@ -1,7 +1,7 @@
 
 function file = EPrint(file, NMin, NMax, traceWidth, externalName)
-  % connect nodes with E statments in series from node #NMin to node #NMax 
-  % & add port connections of node #NMin and node #NMax 
+  % connect nodes with E statments in series from node #NMin to node #NMax
+  % & add port connections of node #NMin and node #NMax
   % file: .inp file for text to be written to
   % NMin: starting node (first object of file starts with N1)
   % NMax: ending node
@@ -15,5 +15,5 @@ function file = EPrint(file, NMin, NMax, traceWidth, externalName)
   fprintf(file, ['.external N', num2str(NMin), ' N', num2str(NMax), ' ', externalName, '\n']);
 endfunction
 
-% function file EPrint created by Thomas Sharratt Copyright (C) 2023
-% <Created for Octave on Arch Linux>
+% function file EPrint created by Thomas Sharratt Copyright (C) 2024
+% <Created for Octave on Arch Linux & Windows>

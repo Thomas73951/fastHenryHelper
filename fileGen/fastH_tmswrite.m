@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-% <Created for Octave on Arch Linux>
+% <Created for Octave on Arch Linux & Windows>
 % Creates a .inp file with two coils with specified:
 % spacing, inner diameter, turn count, trace width, z position, and offset.
 % Offset as matrix of x rows of x,y value pairs.

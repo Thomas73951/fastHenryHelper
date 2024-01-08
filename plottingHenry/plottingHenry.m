@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-% <Created for Octave on Arch Linux>
+% <Created for Octave on Arch Linux & Windows>
 % Plotting for fastHenry results in csv file created by fasthenryhelper/automatedhenry/
 % Requires a sweep over an offset direction.
 %

@@ -15,4 +15,4 @@ function saveImages()
 endfunction
 
 % function file saveImages created by Thomas Sharratt Copyright (C) 2024
-% <Created for Octave on Arch Linux>
+% <Created for Octave on Arch Linux & Windows>

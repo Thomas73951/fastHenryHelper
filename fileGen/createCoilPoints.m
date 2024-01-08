@@ -24,5 +24,5 @@ function [x,y] = createCoilPoints(s, id, turns, offset)
   y = y + (offset(2) - id/2);
 endfunction
 
-% function file createCoilPoints created by Thomas Sharratt Copyright (C) 2023
-% <Created for Octave on Arch Linux>
+% function file createCoilPoints created by Thomas Sharratt Copyright (C) 2024
+% <Created for Octave on Arch Linux & Windows>

@@ -14,5 +14,5 @@ function file = nodePrint(file, NMin, NMax, x, y, z)
   endfor
 endfunction
 
-% function file nodePrint created by Thomas Sharratt Copyright (C) 2023
-% <Created for Octave on Arch Linux>
+% function file nodePrint created by Thomas Sharratt Copyright (C) 2024
+% <Created for Octave on Arch Linux & Windows>
