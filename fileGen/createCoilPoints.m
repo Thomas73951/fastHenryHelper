@@ -34,10 +34,10 @@ function [x,y, z] = createCoilPoints(s, id, turns, offset, thickness, portSpacin
   % Bring inner port to outside edge (done pre-offset), 3 new lines
   % starts from new first node A on outside edge of coil:
   % A: line in z - on outside, from offsetZ, length=thickness
-  % A: line in y - outside to centre, z = thickness,
-  % B: line in z - thickness to offsetZ
-  % C: line in x - middle(ish) of id to bottom left corner
-  % D is then existing first node of original array.
+  % B: line in y - outside to centre, z = thickness,
+  % C: line in z - thickness to offsetZ
+  % D: line in x - middle(ish) of id to bottom left corner
+  % E is then existing first node of original array.
   xInnerPort = id/2 - portSpacing/2; % becomes port on the left
   x = [xInnerPort, xInnerPort,             xInnerPort,            xInnerPort, x];
   y = [min(y),     min(y),                 0,                     0         , y];
