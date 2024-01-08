@@ -1,6 +1,7 @@
 clear all
 close all
 clc
+% TODO: FIX FILE FORMAT, NOW HAS Z SWEEP
 
 % <Created for Octave on Arch Linux & Windows>
 % Plotting for fastHenry results in csv file created by fasthenryhelper/automatedhenry/

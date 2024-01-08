@@ -13,6 +13,7 @@ clc
 % figures are optionally saved to images/ with SAVE_IMG = true.
 %
 % .inp files are netlist style files read by FastHenry2 by FastFieldSolvers.
+% Reader coil denoted as Coil1, Tag coil denoted as Coil2
 %
 % Uses function files: createCoilPoints.m, EPrint.m, nodePrint.m, saveImages.m
 %
@@ -25,7 +26,7 @@ WRITE_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, '
 SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
 % v puts each file into a subfolder - can only be used with multiple offset values
-USE_SUBFOLDERS = false;
+USE_SUBFOLDERS = true;
 
 % units in mm.
 s = [0.4 0.1]; % spacing
@@ -36,23 +37,23 @@ portSpacing = [1 0.1]; % x spacing of ports brought to bottom middle of coil
 % v z offset of trace to bring ports to bottom middle of coil...
 %   i.e. trace on other side of pcb therefore pcb board thickness.
 boardThickness = [-1.6 0.1];
-z = [0 5];
 freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all files)
 
-% set of offsets for coil2 (x,y). Creates one file for each offset pair given
-% e.g. two pairs: [0 0; 1 0]
-##offset2 = [0 0];
+% Coil1 is "normalised" at (0, 0, 0)
+% set of offsets for coil2 (x,y,z). Creates one file for each offset triplet given
+% e.g. two pairs: [0 0 5; 1 0 5] - coil2 at y=0, z=5, moves from x=0 -> x=1
+offset2 = [0 0 0];
 ##offset2 = [0 0; 1 0; 2 0];
-##offsetX = linspace(0, 100, 101); % x sweep
-##offsetY = zeros(size(offsetX, 2),1);
-##offset2 = horzcat([transpose(offsetX), offsetY]);
-##offsetY = linspace(0, 10, 11); % y sweep
-##offsetX = zeros(size(offsetY, 2),1);
+offsetX = linspace(0, 20, 101); % x sweep
+offsetY = zeros(size(offsetX));
+offsetZ = 5 * ones(size(offsetX));
+offset2 = transpose([offsetX; offsetY; offsetZ]);
+##offsetY = linspace(0, 20, 101); % y sweep NEEDS FIXING FOR Z ADDITION
+##offsetX = zeros(size(offsetY);
 ##offset2 = horzcat([offsetX, transpose(offsetY)]);
-
-offsetX = linspace(0, 10, 11); % x sweep
-offsetY = linspace(0, 10, 11);
-offset2 = horzcat([transpose(offsetX), transpose(offsetY)]);
+##offsetX = linspace(0, 10, 11); % x sweep
+##offsetY = linspace(0, 10, 11);
+##offset2 = horzcat([transpose(offsetX), transpose(offsetY)]);
 
 OFFSET_DP = 1; % accuracy of offset in decimal places
 % < END OF user defined
@@ -85,8 +86,10 @@ for iterINP = 1:numOffsets
               '_C2_T', num2str(turns(2)), '_ID', num2str(id(2)), '_S', num2str(s(2)), ...
               '_O' num2str(offset2(iterINP,1)), '_', num2str(offset2(iterINP,2)), '.inp']
   if (USE_SUBFOLDERS && numOffsets > 1) % only needed for multiple offsets
+    % subfolder name: "Offset, x,y,z"
     subfolder = ['Offset,', num2str(offset2(iterINP,1), offsetFormat), ...
-                 ',', num2str(offset2(iterINP,2), offsetFormat)];
+                 ',', num2str(offset2(iterINP,2), offsetFormat), ...
+                 ',', num2str(offset2(iterINP,3), offsetFormat)];
 
     if (!exist([WRITE_FOLDER, subfolder, filesep]))
       mkdir(WRITE_FOLDER, subfolder); % create subfolder if doesnt exist
@@ -104,7 +107,7 @@ for iterINP = 1:numOffsets
 
   %% COIL 1
   % create a set of x,y values which will form the nodes
-  [x1,y1, z1] = createCoilPoints(s(1), id(1), turns(1), [0 0 z(1)], boardThickness(1), portSpacing(1));
+  [x1,y1, z1] = createCoilPoints(s(1), id(1), turns(1), [0 0 0], boardThickness(1), portSpacing(1));
   % plot x,y value set
   if (SHOW_FIGURES)
     figure(iterINP*2-1)
@@ -114,7 +117,7 @@ for iterINP = 1:numOffsets
     xlim([(min(x1) - 1), (max(x1) + 1)])
     ylim([(min(y1) - 1), (max(y1) + 1)])
     legend('FontSize',11)
-    title(['Coil 1, z = ', num2str(z(1)), ', W = ', num2str(traceWidth(1)), ...
+    title(['Coil 1, z = 0, W = ', num2str(traceWidth(1)), ...
            ' [dimensions in mm]'])
   endif
   % turn set of x,y values into fasthenry nodes
@@ -135,7 +138,7 @@ for iterINP = 1:numOffsets
   %% COIL 2
   N2Min = N1Max + 1;
   % create a set of x,y values which will form the nodes
-  [x2,y2,z2] = createCoilPoints(s(2), id(2), turns(2), [offset2(iterINP,:), z(2)], boardThickness(2), portSpacing(2));
+  [x2,y2,z2] = createCoilPoints(s(2), id(2), turns(2), offset2(iterINP,:), boardThickness(2), portSpacing(2));
   % plot x,y value set
   if (SHOW_FIGURES)
     figure(iterINP*2)
@@ -145,9 +148,10 @@ for iterINP = 1:numOffsets
     xlim([(min(x2) - 0.1), (max(x2) + 0.1)])
     ylim([(min(y2) - 0.1), (max(y2) + 0.1)])
     legend('FontSize',11)
-    title(['Coil 2, z = ', num2str(z(2)), ', W = ', num2str(traceWidth(2)), ...
+    title(['Coil 2, W = ', num2str(traceWidth(2)), ...
            ', Offset=(', num2str(offset2(iterINP,1)), ',', ...
-           num2str(offset2(iterINP,2)), ') [dimensions in mm]'])
+           num2str(offset2(iterINP,2)), ',', num2str(offset2(iterINP,3)), ...
+           ') [dimensions in mm]'])
   endif
   % turn set of x,y values into fasthenry nodes
   N2Max = N1Max + size(x2,2);
