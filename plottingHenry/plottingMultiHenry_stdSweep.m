@@ -129,5 +129,5 @@ endfor
 
 %% save figures?
 if (SAVE_IMG)
-  saveImages();
+  saveImages(folderName);
 endif

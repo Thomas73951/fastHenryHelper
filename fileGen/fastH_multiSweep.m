@@ -202,7 +202,7 @@ function makeFiles(writeFolder, USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, t
 
   % save all figures
   if (SAVE_IMG && SHOW_FIGURES)
-    saveImages();
+    saveImages(["images", filesep]);
   endif
 
 endfunction
