@@ -68,18 +68,15 @@ offsetY = zeros(size(offsetX));
 offsetZ = 5 * ones(size(offsetX));
 sweepB = transpose([offsetX; offsetY; offsetZ]);
 
-offsetX = linspace(0, 20, 101); % sweepC - x sweep, z=10mm
-offsetY = zeros(size(offsetX));
+% sweepC - x sweep, z=10mm
 offsetZ = 10 * ones(size(offsetX));
 sweepC = transpose([offsetX; offsetY; offsetZ]);
 
-offsetX = linspace(0, 20, 101); % sweepD - x sweep, z=15mm
-offsetY = zeros(size(offsetX));
+% sweepD - x sweep, z=15mm
 offsetZ = 15 * ones(size(offsetX));
 sweepD = transpose([offsetX; offsetY; offsetZ]);
 
-offsetX = linspace(0, 20, 101); % sweepE - x sweep, z=20mm
-offsetY = zeros(size(offsetX));
+% sweepE - x sweep, z=20mm
 offsetZ = 20 * ones(size(offsetX));
 sweepE = transpose([offsetX; offsetY; offsetZ]);
 
