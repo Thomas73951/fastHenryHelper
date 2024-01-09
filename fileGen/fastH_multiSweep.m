@@ -25,7 +25,7 @@ clc
 % n.b. file name is auto generated
 TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep];
 ##TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'indiv-coils', filesep]
-EXT_FOLDER = ['offset-test3', filesep];
+EXT_FOLDER = ['offset-test5', filesep];
 SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
 % v puts each file into a subfolder - can only be used with multiple offset values
@@ -57,10 +57,32 @@ freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all 
 ##offsetZ = 5 * ones(size(offsetX));
 ##offset2 = transpose([offsetX; offsetY; offsetZ]);
 
-offsetZ = linspace(1, 21, 101); % Z sweep
+
+offsetZ = linspace(1, 21, 101); % sweepA - z sweep
 offsetX = zeros(size(offsetZ));
 offsetY = zeros(size(offsetZ));
-offset2 = transpose([offsetX; offsetY; offsetZ]);
+sweepA = transpose([offsetX; offsetY; offsetZ]);
+
+offsetX = linspace(0, 20, 101); % sweepB - x sweep, z=5mm
+offsetY = zeros(size(offsetX));
+offsetZ = 5 * ones(size(offsetX));
+sweepB = transpose([offsetX; offsetY; offsetZ]);
+
+offsetX = linspace(0, 20, 101); % sweepC - x sweep, z=10mm
+offsetY = zeros(size(offsetX));
+offsetZ = 10 * ones(size(offsetX));
+sweepC = transpose([offsetX; offsetY; offsetZ]);
+
+offsetX = linspace(0, 20, 101); % sweepD - x sweep, z=15mm
+offsetY = zeros(size(offsetX));
+offsetZ = 15 * ones(size(offsetX));
+sweepD = transpose([offsetX; offsetY; offsetZ]);
+
+offsetX = linspace(0, 20, 101); % sweepE - x sweep, z=20mm
+offsetY = zeros(size(offsetX));
+offsetZ = 20 * ones(size(offsetX));
+sweepE = transpose([offsetX; offsetY; offsetZ]);
+
 
 OFFSET_DP = 1; % accuracy of offset in decimal places
 % < END OF user defined
@@ -75,12 +97,6 @@ if any(gap < 0)
   error("TRACES OVERLAP. Spacing too small or trace width too large, exiting...")
 endif
 
-% WRITE FOLDER exists?
-if (!exist(writeFolder))
-  disp("writeFolder directory doesn't exist, creating...")
-  mkdir(writeFolder);
-endif
-
 
 function makeFiles(writeFolder, USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, offset2, offsetDP)
   numOffsets = size(offset2, 1)
@@ -89,6 +105,12 @@ function makeFiles(writeFolder, USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, t
   maxNumDigits = floor(log10(max(max(offset2)))) + 1; % num of digits of max value
   offsetFormat = ["%0", num2str(maxNumDigits + 1 + offsetDP), ...
                   ".", num2str(offsetDP), "f"];
+
+  % WRITE FOLDER exists?
+  if (!exist(writeFolder))
+    disp("writeFolder directory doesn't exist, creating...")
+    mkdir(writeFolder);
+  endif
 
   %% Create .inp file(s)
   for iterINP = 1:numOffsets
@@ -187,5 +209,21 @@ endfunction
 
 
 
+
 % function calls
-makeFiles(writeFolder, USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, offset2, OFFSET_DP)
+
+% Sweep A
+makeFiles([writeFolder, 'Sweep1', filesep], USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, sweepA, OFFSET_DP)
+
+% Sweep A
+makeFiles([writeFolder, 'Sweep2', filesep], USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, sweepB, OFFSET_DP)
+
+% Sweep A
+makeFiles([writeFolder, 'Sweep3', filesep], USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, sweepC, OFFSET_DP)
+
+% Sweep A
+makeFiles([writeFolder, 'Sweep4', filesep], USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, sweepD, OFFSET_DP)
+
+% Sweep A
+makeFiles([writeFolder, 'Sweep5', filesep], USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, sweepE, OFFSET_DP)
+
