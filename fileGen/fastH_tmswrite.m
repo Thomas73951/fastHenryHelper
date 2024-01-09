@@ -7,7 +7,7 @@ clc
 % spacing, inner diameter, turn count, trace width, z position, and offset.
 % Offset as matrix of x rows of x,y value pairs.
 % One to generate one file, multiple rows for multiple files generated.
-% .inp file is saved to WRITE_FOLDER with an name generated from parameters,
+% .inp file is saved to writeFolder with an name generated from parameters,
 % and optionally each file is put into its own subfolder...
 % (due to how fastHenry saves Zc.mat, overwritten otherwise)
 % figures are optionally saved to images/ with SAVE_IMG = true.
@@ -22,7 +22,10 @@ clc
 
 
 %% USER DEFINED >
-WRITE_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep, 'offset-test3', filesep]; % file name is auto generated
+% n.b. file name is auto generated
+TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep];
+##TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'indiv-coils', filesep]
+EXT_FOLDER = ['offset-test3', filesep];
 SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
 % v puts each file into a subfolder - can only be used with multiple offset values
@@ -63,6 +66,7 @@ OFFSET_DP = 1; % accuracy of offset in decimal places
 % < END OF user defined
 
 % Setup bits
+writeFolder = [TOP_FOLDER, EXT_FOLDER];
 numOffsets = size(offset2, 1)
 N1Min = 1;
 % format for num2str, gives right padding
@@ -77,9 +81,9 @@ if any(gap < 0)
 endif
 
 % WRITE FOLDER exists?
-if (!exist(WRITE_FOLDER))
-  disp("WRITE_FOLDER directory doesn't exist, creating...")
-  mkdir(WRITE_FOLDER);
+if (!exist(writeFolder))
+  disp("writeFolder directory doesn't exist, creating...")
+  mkdir(writeFolder);
 endif
 
 
@@ -95,12 +99,12 @@ for iterINP = 1:numOffsets
                  ',', num2str(offset2(iterINP,2), offsetFormat), ...
                  ',', num2str(offset2(iterINP,3), offsetFormat)];
 
-    if (!exist([WRITE_FOLDER, subfolder, filesep]))
-      mkdir(WRITE_FOLDER, subfolder); % create subfolder if doesnt exist
+    if (!exist([writeFolder, subfolder, filesep]))
+      mkdir(writeFolder, subfolder); % create subfolder if doesnt exist
     endif
-    file = fopen([WRITE_FOLDER, subfolder, filesep, fileName],'wt');
+    file = fopen([writeFolder, subfolder, filesep, fileName],'wt');
   else
-    file = fopen([WRITE_FOLDER, fileName],'wt');
+    file = fopen([writeFolder, fileName],'wt');
   endif
 
   fprintf(file, horzcat('* Fasthenry file "', fileName, ...
