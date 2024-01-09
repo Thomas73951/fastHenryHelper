@@ -25,7 +25,8 @@ Dim FastHenry2
 Set FastHenry2 = CreateObject("FastHenry2.Document")
 
 ' Set folder to simulate
-sweepFolder = "offset-test4" ' no "\"
+coil1Folder = "C1_T10_ID4_S0.4_W0.2\"
+coil2Folder = "C2_T20_ID0.2_S0.1_W0.03\"
 
 ' REGEX - INP FILES ONLY
 Set regexINP = New RegExp
@@ -38,13 +39,44 @@ End With
 ' TEST FILE SETUP
 ' Extract script path from ScriptFullName Property
 pathPos = InstrRev(Wscript.ScriptFullName, Wscript.ScriptName)
-path = left(Wscript.ScriptFullName, pathPos-1)
+path = left(Wscript.ScriptFullName, pathPos-2)
+path = left(path, InStrRev(path, "\")) ' PATH points to root git folder "....fastHenryHelper/"
 testFilesFolder = path + "testfiles\offsetcoils\"
 ' setup folder of test files
 Set sweepObjFSO = CreateObject("Scripting.FileSystemObject")
-Set sweepObjFolder = sweepObjFSO.GetFolder(testFilesFolder + sweepFolder + "\")
+Set sweepObjFolder = sweepObjFSO.GetFolder(testFilesFolder + coil1Folder + coil2Folder)
 Wscript.echo "Reading Sweep folders from " & sweepObjFolder
 Set sweepColFiles = sweepObjFolder.Files
+
+' SETUP OUTPUT FOLDER
+
+resultsFolder = "results\" + coil1Folder + coil2Folder ' no path
+outputFolder = path + resultsFolder
+resultsFolderName = left(resultsFolder, len(resultsFolder) - 1)
+
+' If NOT (outputFolderfso.FolderExists(outputFolderName)) Then
+'     WScript.echo "Output folder doesn't exist, creating."
+'     WScript.echo outputFolderName
+'     temp = outputFolderfso.CreateFolder(outputFolderName)
+' End If
+
+' from: https://stackoverflow.com/questions/5729903/vb-script-error-path-path-not-found800a004c
+Dim outputFolderfso, pathBuild
+Set outputFolderfso = CreateObject("Scripting.FileSystemObject")
+folders = Split(resultsFolderName, "\")
+For i = 0 To UBound(folders)
+    pathBuild = outputFolderfso.BuildPath(pathBuild, folders(i))
+    If NOT outputFolderfso.FolderExists(pathBuild) Then
+        WScript.echo "pathbuild: " & pathBuild
+        outputFolderfso.CreateFolder(pathBuild)
+        If Err Then
+            Err.Clear
+            strErr = SPOFOLDERFAIL
+            rCode = 4
+        End If
+    End If
+Next
+
 
 WScript.Echo "Setup complete, running..."
 
@@ -62,9 +94,9 @@ For i = 1 to 5 ' Run each of the five sweeps saving results to individual CSV fi
     ' OUTPUT CSV FILE SETUP
     Dim fso, OutputFile
     Set fso = CreateObject("Scripting.FileSystemObject")
-    outputFolder = path + "testfiles\"
-    outputFileName = outputFolder + sweepFolder + "_Sweep" + CStr(i) + "_inductances.csv"
-    ' Wscript.echo outputFileName
+
+    outputFileName = outputFolder + "Sweep" + CStr(i) + "_inductances.csv"
+    Wscript.echo outputFileName
     Set OutputFile = fso.CreateTextFile(outputFileName, True)
 
     ' RUN FASTHENRY FOR All .inp FILES IN SWEEP FOLDER

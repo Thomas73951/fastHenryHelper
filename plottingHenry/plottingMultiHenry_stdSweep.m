@@ -15,8 +15,9 @@ clc
 
 %% USER DEFINED >
 % Read folder is top folder containing sweep folders.
-READ_FOLDER = ['results', filesep]; %, 'offset-y-0-20-101', filesep];
-FILE_NAME_PART_INDUCTANCES = "offset-test5";
+READ_FOLDER = ['..', filesep 'results', filesep];
+COIL1_FOLDER = ['C1_T10_ID4_S0.4_W0.2', filesep]
+COIL2_FOLDER = ['C2_T20_ID0.2_S0.1_W0.03', filesep]
 SAVE_IMG = true; % save figures in images folder
 PLOT_MARKER = '-'; % global plot marker for this script
 % < END OF user defined
@@ -37,10 +38,12 @@ function sweepType = determineSweepType(sweepX, sweepY, sweepZ)
   endif
 endfunction
 
+folderName = [READ_FOLDER, COIL1_FOLDER, COIL2_FOLDER]
+
 for i = 1:5
   %% Read csv file
-  csvFileName = [FILE_NAME_PART_INDUCTANCES, '_Sweep', num2str(i), '_inductances.csv'];
-  data = csvread([READ_FOLDER, csvFileName]);
+  csvFileName = ['Sweep', num2str(i), '_inductances.csv'];
+  data = csvread([folderName, csvFileName]);
   sweepX = data(:,2); % requires comma separated folder name: ".../Offset,x,y/"
   sweepY = data(:,3);
   sweepZ = data(:,4);

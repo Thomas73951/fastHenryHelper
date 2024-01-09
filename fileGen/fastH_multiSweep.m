@@ -23,9 +23,8 @@ clc
 
 %% USER DEFINED >
 % n.b. file name is auto generated
-TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep];
-##TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'indiv-coils', filesep]
-EXT_FOLDER = ['offset-test5', filesep];
+TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'offsetcoils', filesep];
+##TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'indiv-coils', filesep];
 SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
 % v puts each file into a subfolder - can only be used with multiple offset values
@@ -58,12 +57,12 @@ freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all 
 ##offset2 = transpose([offsetX; offsetY; offsetZ]);
 
 
-offsetZ = linspace(1, 21, 101); % sweepA - z sweep
+offsetZ = linspace(1, 21, 51); % sweepA - z sweep
 offsetX = zeros(size(offsetZ));
 offsetY = zeros(size(offsetZ));
 sweepA = transpose([offsetX; offsetY; offsetZ]);
 
-offsetX = linspace(0, 20, 101); % sweepB - x sweep, z=5mm
+offsetX = linspace(0, 20, 51); % sweepB - x sweep, z=5mm
 offsetY = zeros(size(offsetX));
 offsetZ = 5 * ones(size(offsetX));
 sweepB = transpose([offsetX; offsetY; offsetZ]);
@@ -85,7 +84,11 @@ OFFSET_DP = 1; % accuracy of offset in decimal places
 % < END OF user defined
 
 % Setup bits
-writeFolder = [TOP_FOLDER, EXT_FOLDER];
+coil1Folder = ['C1_T', num2str(turns(1)), '_ID', num2str(id(1)), ...
+               '_S', num2str(s(1)), '_W', num2str(traceWidth(1)), filesep]
+coil2Folder = ['C2_T', num2str(turns(2)), '_ID', num2str(id(2)), ...
+               '_S', num2str(s(2)), '_W', num2str(traceWidth(2)), filesep]
+writeFolder = [TOP_FOLDER, coil1Folder, coil2Folder];
 
 
 % test size of gap between adjacent traces in coil
@@ -105,16 +108,15 @@ function makeFiles(writeFolder, USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, t
 
   % WRITE FOLDER exists?
   if (!exist(writeFolder))
-    disp("writeFolder directory doesn't exist, creating...")
+    disp([writeFolder, " directory doesn't exist, creating..."])
     mkdir(writeFolder);
   endif
 
   %% Create .inp file(s)
   for iterINP = 1:numOffsets
-    %% fasthenry "frontmatter"
-    fileName = ['fh_C1_T', num2str(turns(1)), '_ID', num2str(id(1)), '_S', num2str(s(1)), ...
-                '_C2_T', num2str(turns(2)), '_ID', num2str(id(2)), '_S', num2str(s(2)), ...
-                '_O' num2str(offset2(iterINP,1)), '_', num2str(offset2(iterINP,2)), '.inp']
+    fileName = ['Coil1_0_0_0_Coil2_', num2str(offset2(iterINP,1), offsetFormat), ...
+                '_', num2str(offset2(iterINP,2), offsetFormat), ...
+                '_', num2str(offset2(iterINP,3), offsetFormat), '.inp'];
     if (USE_SUBFOLDERS && numOffsets > 1) % only needed for multiple offsets
       % subfolder name: "Offset, x,y,z"
       subfolder = ['Offset,', num2str(offset2(iterINP,1), offsetFormat), ...
@@ -129,6 +131,7 @@ function makeFiles(writeFolder, USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, t
       file = fopen([writeFolder, fileName],'wt');
     endif
 
+    %% fasthenry "frontmatter"
     fprintf(file, horzcat('* Fasthenry file "', fileName, ...
                           '" generated from fastH_tmswrite.m\n'));
     fprintf(file, '.units mm\n');
