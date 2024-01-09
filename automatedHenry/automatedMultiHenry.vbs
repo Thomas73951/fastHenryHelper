@@ -43,14 +43,15 @@ testFilesFolder = path + "testfiles\offsetcoils\"
 ' setup folder of test files
 Set sweepObjFSO = CreateObject("Scripting.FileSystemObject")
 Set sweepObjFolder = sweepObjFSO.GetFolder(testFilesFolder + sweepFolder + "\")
-Wscript.echo "Sweep folder" & sweepObjFolder
+Wscript.echo "Reading Sweep folders from " & sweepObjFolder
 Set sweepColFiles = sweepObjFolder.Files
 
 WScript.Echo "Setup complete, running..."
 
-For i = 1 to 5
+For i = 1 to 5 ' Run each of the five sweeps saving results to individual CSV files
     ' WScript.echo "Sweep i=" & i
 
+    ' Create new file system object with "root" folder of each sweep directory in turn
     Set objFSO = CreateObject("Scripting.FileSystemObject")
     indivSweepPath = sweepObjFolder + "\Sweep" + Cstr(i) + "\"
     ' WScript.echo "Trying to run " & indivSweepPath
@@ -58,21 +59,20 @@ For i = 1 to 5
     ' Wscript.echo "Running folder: " & objFolder
     Set colFiles = objFolder.Files
 
-
-    ' OUTPUT FILE SETUP
+    ' OUTPUT CSV FILE SETUP
     Dim fso, OutputFile
-    ' Create a FileSystemObject  
     Set fso = CreateObject("Scripting.FileSystemObject")
-    ' Create text file to output test data
     outputFolder = path + "testfiles\"
     outputFileName = outputFolder + sweepFolder + "_Sweep" + CStr(i) + "_inductances.csv"
     ' Wscript.echo outputFileName
     Set OutputFile = fso.CreateTextFile(outputFileName, True)
-    ' RUN FASTHENRY FOR EACH .inp FILE
+
+    ' RUN FASTHENRY FOR All .inp FILES IN SWEEP FOLDER
     RecursiveHenry objFolder ' run function with root folder
 
 Next
 
+' Function to do the recursive folder searching and running of fasthenry
 ' Runs FastHenry on all .inp files in root folder (inc. subfolders), saves results to CSV 
 ' Uses global: OutputFile, regexINP, FastHenry2.
 Function RecursiveHenry(fldr) 
