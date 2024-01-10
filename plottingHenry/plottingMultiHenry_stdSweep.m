@@ -18,6 +18,7 @@ clc
 READ_FOLDER = ['..', filesep 'results', filesep];
 COIL1_FOLDER = ['C1_T10_ID4_S0.4_W0.2', filesep]
 COIL2_FOLDER = ['C2_T20_ID0.2_S0.1_W0.03', filesep]
+PLOT_L = false;
 SAVE_IMG = true; % save figures in images folder
 PLOT_MARKER = '-'; % global plot marker for this script
 % < END OF user defined
@@ -81,27 +82,34 @@ for i = 1:5
 
   %% Plotting
   % L1
-  figure(figNumStart)
-  grid on
-  hold on
-  plot(sweepVar, L1, PLOT_MARKER, 'DisplayName', ['L1 ', constCoords])
-  legend('FontSize',11)
-  % xlim([sweepVar(1), sweepVar(end)])
-  xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
-  ylabel("Inductance [H]")
-  title(['L1 (reader) Swept Over ', sweepAxis, '-axis'])
+  if (PLOT_L)
+    figure(figNumStart)
+    grid on
+    hold on
+    plot(sweepVar, L1, PLOT_MARKER, 'DisplayName', ['L1 ', constCoords])
+    legend('FontSize',11)
+    % xlim([sweepVar(1), sweepVar(end)])
+    xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
+    ylabel("Inductance [H]")
+    title(['L1 (reader) Swept Over ', sweepAxis, '-axis'])
+  else
+    disp(["avg L1: ", num2str(mean(L1))])
+  endif
 
   % L2
-  figure(figNumStart + 1)
-  grid on
-  hold on
-  plot(sweepVar, L2, PLOT_MARKER, 'DisplayName', ['L2 ', constCoords])
-  legend('FontSize',11)
-  % xlim([sweepVar(1), sweepVar(end)])
-  xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
-  ylabel("Inductance [H]")
-  title(['L2 (tag) Swept Over ', sweepAxis, '-axis'])
-
+  if (PLOT_L)
+    figure(figNumStart + 1)
+    grid on
+    hold on
+    plot(sweepVar, L2, PLOT_MARKER, 'DisplayName', ['L2 ', constCoords])
+    legend('FontSize',11)
+    % xlim([sweepVar(1), sweepVar(end)])
+    xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
+    ylabel("Inductance [H]")
+    title(['L2 (tag) Swept Over ', sweepAxis, '-axis'])
+  else
+    disp(["avg L2: ", num2str(mean(L2))])
+  endif
 
   % M
   figure(figNumStart + 2)
@@ -114,6 +122,10 @@ for i = 1:5
   ylabel("Inductance [H]")
   title(['Mutual Inductance Swept Over ', sweepAxis, '-axis'])
 
+  if (sweepAxis == "z")
+    disp(["Max M (z sweep): ", num2str(max(M))])
+  endif
+
 
   % K
   figure(figNumStart + 3)
@@ -125,6 +137,10 @@ for i = 1:5
   xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
   ylabel("Coupling Factor []")
   title(['Coupling Factor (k) Swept Over ', sweepAxis, '-axis'])
+
+  if (sweepAxis == "z")
+    disp(["Max K (z sweep): ", num2str(max(k))])
+  endif
 endfor
 
 %% save figures?
