@@ -40,6 +40,7 @@ function sweepType = determineSweepType(sweepX, sweepY, sweepZ)
 endfunction
 
 folderName = [READ_FOLDER, COIL1_FOLDER, COIL2_FOLDER]
+coilNameText = ["\n[", COIL1_FOLDER(1:end-1), "] [", COIL2_FOLDER(1:end-1), "]"];
 
 for i = 1:5
   %% Read csv file
@@ -91,7 +92,7 @@ for i = 1:5
     % xlim([sweepVar(1), sweepVar(end)])
     xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
     ylabel("Inductance [H]")
-    title(['L1 (reader) Swept Over ', sweepAxis, '-axis'])
+    title(['L1 (reader) Swept Over ', sweepAxis, '-axis', coilNameText], 'Interpreter', 'none')
   else
     disp(["avg L1: ", num2str(mean(L1))])
   endif
@@ -106,7 +107,7 @@ for i = 1:5
     % xlim([sweepVar(1), sweepVar(end)])
     xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
     ylabel("Inductance [H]")
-    title(['L2 (tag) Swept Over ', sweepAxis, '-axis'])
+    title(['L2 (tag) Swept Over ', sweepAxis, '-axis', coilNameText], 'Interpreter', 'none')
   else
     disp(["avg L2: ", num2str(mean(L2))])
   endif
@@ -120,7 +121,7 @@ for i = 1:5
   % xlim([sweepVar(1), sweepVar(end)])
   xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
   ylabel("Inductance [H]")
-  title(['Mutual Inductance Swept Over ', sweepAxis, '-axis'])
+  title(['Mutual Inductance Swept Over ', sweepAxis, '-axis', coilNameText], 'Interpreter', 'none')
 
   if (sweepAxis == "z")
     disp(["Max M (z sweep): ", num2str(max(M))])
@@ -136,7 +137,7 @@ for i = 1:5
   % xlim([sweepVar(1), sweepVar(end)])
   xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
   ylabel("Coupling Factor []")
-  title(['Coupling Factor (k) Swept Over ', sweepAxis, '-axis'])
+  title(['Coupling Factor (k) Swept Over ', sweepAxis, '-axis', coilNameText], 'Interpreter', 'none')
 
   if (sweepAxis == "z")
     disp(["Max K (z sweep): ", num2str(max(k))])
