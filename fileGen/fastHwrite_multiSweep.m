@@ -32,7 +32,7 @@ USE_SUBFOLDERS = true;
 
 % units in mm.
 s = [0.4 0.1]; % spacing
-id = [4.0 0.2]; % inner diameter
+id = [40 0.2]; % inner diameter
 turns = [10 20]; % number of complete turns
 traceWidth = [0.2 0.03]; % trace width
 portSpacing = [1 0.1]; % x spacing of ports brought to bottom middle of coil
