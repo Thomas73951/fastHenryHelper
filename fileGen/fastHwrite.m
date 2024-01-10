@@ -23,18 +23,18 @@ clc
 
 %% USER DEFINED >
 % n.b. file name is auto generated
-TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep];
-##TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'indiv-coils', filesep]
-EXT_FOLDER = ['offset-test3', filesep];
-SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
+##TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep];
+TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'indiv-coils', filesep]
+EXT_FOLDER = ['offset-test6', filesep];
+SHOW_FIGURES = true; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
 % v puts each file into a subfolder - can only be used with multiple offset values
-USE_SUBFOLDERS = true;
+USE_SUBFOLDERS = false;
 
 % units in mm.
-s = [0.4 0.1]; % spacing
-id = [4.0 0.2]; % inner diameter
-turns = [10 20]; % number of complete turns
+s = [0.8 0.1]; % spacing
+id = [43 0.2]; % inner diameter
+turns = [5 20]; % number of complete turns
 traceWidth = [0.2 0.03]; % trace width
 portSpacing = [1 0.1]; % x spacing of ports brought to bottom middle of coil
 % v z offset of trace to bring ports to bottom middle of coil...
@@ -45,7 +45,7 @@ freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all 
 % Coil1 is "normalised" at (0, 0, 0)
 % set of offsets for coil2 (x,y,z). Creates one file for each offset triplet given
 % e.g. two pairs: [0 0 5; 1 0 5] - coil2 at y=0, z=5, moves from x=0 -> x=1
-offset2 = [0 0 0];
+offset2 = [0 0 5];
 ##offset2 = [0 0; 1 0; 2 0];
 ##offsetX = linspace(0, 20, 101); % x sweep
 ##offsetY = zeros(size(offsetX));
@@ -57,10 +57,10 @@ offset2 = [0 0 0];
 ##offsetZ = 5 * ones(size(offsetX));
 ##offset2 = transpose([offsetX; offsetY; offsetZ]);
 
-offsetZ = linspace(1, 21, 101); % Z sweep
-offsetX = zeros(size(offsetZ));
-offsetY = zeros(size(offsetZ));
-offset2 = transpose([offsetX; offsetY; offsetZ]);
+##offsetZ = linspace(1, 21, 101); % Z sweep
+##offsetX = zeros(size(offsetZ));
+##offset2 = transpose([offsetX; offsetY; offsetZ]);
+##offsetY = zeros(size(offsetZ));
 
 OFFSET_DP = 1; % accuracy of offset in decimal places
 % < END OF user defined
