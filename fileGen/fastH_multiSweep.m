@@ -57,12 +57,12 @@ freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all 
 ##offset2 = transpose([offsetX; offsetY; offsetZ]);
 
 
-offsetZ = linspace(1, 21, 51); % sweepA - z sweep
+offsetZ = linspace(1, 41, 101); % sweepA - z sweep
 offsetX = zeros(size(offsetZ));
 offsetY = zeros(size(offsetZ));
 sweepA = transpose([offsetX; offsetY; offsetZ]);
 
-offsetX = linspace(0, 20, 51); % sweepB - x sweep, z=5mm
+offsetX = linspace(0, 40, 101); % sweepB - x sweep, z=5mm
 offsetY = zeros(size(offsetX));
 offsetZ = 5 * ones(size(offsetX));
 sweepB = transpose([offsetX; offsetY; offsetZ]);
@@ -71,12 +71,12 @@ sweepB = transpose([offsetX; offsetY; offsetZ]);
 offsetZ = 10 * ones(size(offsetX));
 sweepC = transpose([offsetX; offsetY; offsetZ]);
 
-% sweepD - x sweep, z=15mm
-offsetZ = 15 * ones(size(offsetX));
+% sweepD - x sweep, z=20mm
+offsetZ = 20 * ones(size(offsetX));
 sweepD = transpose([offsetX; offsetY; offsetZ]);
 
-% sweepE - x sweep, z=20mm
-offsetZ = 20 * ones(size(offsetX));
+% sweepE - x sweep, z=40mm
+offsetZ = 40 * ones(size(offsetX));
 sweepE = transpose([offsetX; offsetY; offsetZ]);
 
 
