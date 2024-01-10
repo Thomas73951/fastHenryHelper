@@ -64,10 +64,13 @@ resultsFolderName = left(resultsFolder, len(resultsFolder) - 1)
 Dim outputFolderfso, pathBuild
 Set outputFolderfso = CreateObject("Scripting.FileSystemObject")
 folders = Split(resultsFolderName, "\")
+pathbuild = path
+' WScript.echo pathbuild
 For i = 0 To UBound(folders)
     pathBuild = outputFolderfso.BuildPath(pathBuild, folders(i))
+    ' WScript.echo "pathbuild: " & pathBuild
     If NOT outputFolderfso.FolderExists(pathBuild) Then
-        WScript.echo "pathbuild: " & pathBuild
+        ' WScript.echo "Didn't exist, creating"
         outputFolderfso.CreateFolder(pathBuild)
         If Err Then
             Err.Clear
