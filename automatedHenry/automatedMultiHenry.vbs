@@ -99,7 +99,7 @@ For i = 1 to 5 ' Run each of the five sweeps saving results to individual CSV fi
     Set fso = CreateObject("Scripting.FileSystemObject")
 
     outputFileName = outputFolder + "Sweep" + CStr(i) + "_inductances.csv"
-    Wscript.echo outputFileName
+    ' Wscript.echo outputFileName
     Set OutputFile = fso.CreateTextFile(outputFileName, True)
 
     ' RUN FASTHENRY FOR All .inp FILES IN SWEEP FOLDER
