@@ -8,3 +8,7 @@
 *results/
 *images/
 *testfiles/
+
+*.venv/
+createSVG/*.csv
+createSVG/*.svg
