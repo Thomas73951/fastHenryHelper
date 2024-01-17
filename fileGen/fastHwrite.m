@@ -182,6 +182,7 @@ endif
 
 % saves x and y points into a CSV, crops underneath ones.
 if (SAVE_POINTS_CSV)
-  csvwrite([writeFolder, "coil_points_x.csv"], x1(4:end));
-  csvwrite([writeFolder, "coil_points_y.csv"], y1(4:end));
+  svgFolder = ['..', filesep 'createSVG', filesep];
+  csvwrite([svgFolder, "coil_points_x.csv"], x1(4:end));
+  csvwrite([svgFolder, "coil_points_y.csv"], y1(4:end));
 endif
