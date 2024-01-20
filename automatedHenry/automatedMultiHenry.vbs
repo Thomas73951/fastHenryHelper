@@ -1,6 +1,7 @@
 ' MODIFIED VERSION OF automatedHenry_withsaving.vbs - Expects root folder to contain 5 sweeps
 ' TODO: read amount of sweeps
 '
+' Front matter from automatedHenry_withsaving.vbs:
 ' Recursively searches through root folder for .inp files which are then run with FastHenry2
 ' (FastHenry2 writes Zc.mat in the same folder as each .inp file upon completion)
 ' ^ Therefore recommended file structure is one .inp file per folder.
@@ -12,21 +13,20 @@
 ' supports two coil files only (untested with others)
 '
 ' Created by Thomas Sharratt Copyright (C) 2024
-' from: listFilesInFolder.vbs by Thomas Sharratt Copyright (C) 2023
-'       from: https://devblogs.microsoft.com/scripting/how-can-i-get-a-list-of-all-the-files-in-a-folder-and-its-subfolders/
-' from: fhdriv.vbs in fasthenry2 (windows) / automation, file by Enrico Di Lorenzo, 2004/05/07 
-' from: writeCSV.vbs by Thomas Sharratt Copyright (C) 2023 
-'       from: https://www.tech-spy.co.uk/2021/01/list-files-in-a-folder-using-vbscript/
+' from: automatedHenry_withsaving.vbs by Thomas Sharratt Copyright (C) 2024
+' from: https://stackoverflow.com/questions/5729903/vb-script-error-path-path-not-found800a004c
 
+
+' Set folder to simulate (USER DEFINED)
+coil1Folder = "C1_T10_ID4_S0.4_W0.2\"
+coil2Folder = "C2_T20_ID0.2_S0.1_W0.03\"
+' folder put in fastHenryHelper\results\
 
 ' FAST HENRY SETUP
 Dim FastHenry2
 ' Create FastHenry2 object
 Set FastHenry2 = CreateObject("FastHenry2.Document")
 
-' Set folder to simulate
-coil1Folder = "C1_T10_ID4_S0.4_W0.2\"
-coil2Folder = "C2_T20_ID0.2_S0.1_W0.03\"
 
 ' REGEX - INP FILES ONLY
 Set regexINP = New RegExp
@@ -49,18 +49,11 @@ Wscript.echo "Reading Sweep folders from " & sweepObjFolder
 Set sweepColFiles = sweepObjFolder.Files
 
 ' SETUP OUTPUT FOLDER
-
 resultsFolder = "results\" + coil1Folder + coil2Folder ' no path
 outputFolder = path + resultsFolder
-resultsFolderName = left(resultsFolder, len(resultsFolder) - 1)
+resultsFolderName = left(resultsFolder, len(resultsFolder) - 1) ' removes last "\"
 
-' If NOT (outputFolderfso.FolderExists(outputFolderName)) Then
-'     WScript.echo "Output folder doesn't exist, creating."
-'     WScript.echo outputFolderName
-'     temp = outputFolderfso.CreateFolder(outputFolderName)
-' End If
-
-' from: https://stackoverflow.com/questions/5729903/vb-script-error-path-path-not-found800a004c
+' create output folder path if it doesn't exist
 Dim outputFolderfso, pathBuild
 Set outputFolderfso = CreateObject("Scripting.FileSystemObject")
 folders = Split(resultsFolderName, "\")
@@ -108,6 +101,7 @@ For i = 1 to 5 ' Run each of the five sweeps saving results to individual CSV fi
 Next
 
 ' Function to do the recursive folder searching and running of fasthenry
+' Gets run once for each sweep
 ' Runs FastHenry on all .inp files in root folder (inc. subfolders), saves results to CSV 
 ' Uses global: OutputFile, regexINP, FastHenry2.
 Function RecursiveHenry(fldr) 

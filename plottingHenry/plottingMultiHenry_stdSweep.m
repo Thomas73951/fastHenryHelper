@@ -2,15 +2,19 @@ clear all
 close all
 clc
 
-% STANDARD SWEEP VERSION. SWEEP1 = Z SWEEP, SWEEP2-5 = X SWEEPS AT DIFFERENT Z
-
 % <Created for Octave on Arch Linux & Windows>
+% MODIFIED VERSION (SUPERSEDES) of plottingMultiHenry.m
+% STANDARD SWEEP VERSION. Any sweep set is possible but 5 are required without modification 
+% TODO: set num sweeps
+% folder structure (autogen) results/coil1folder/coil2folder/SweepX_inductances.csv
+
+
 % Plotting for fastHenry results in csv file created by fasthenryhelper/automatedhenry/
 % Requires a sweep over an offset direction.
 %
 % Uses function file: saveImages.m
 %
-% plottingHenry.m created by Thomas Sharratt Copyright (C) 2024
+% plottingMultiHenry_stdSweep.m created by Thomas Sharratt Copyright (C) 2024
 
 
 %% USER DEFINED >
@@ -65,7 +69,7 @@ for i = 1:5
     sweepVar = sweepX;
     sweepAxis = "x";
     constCoords = ['y = ', num2str(sweepY(1)), ', z = ', num2str(sweepZ(1))];
-    figNumStart = 1; % TODO: bodge fix of current problems
+    figNumStart = 1;
   elseif (sweepType == [0,1,0]) % y sweep
     sweepVar = sweepY;
     sweepAxis = "y";

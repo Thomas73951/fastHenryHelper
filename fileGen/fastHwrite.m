@@ -10,14 +10,16 @@ clc
 % .inp file is saved to writeFolder with an name generated from parameters,
 % and optionally each file is put into its own subfolder...
 % (due to how fastHenry saves Zc.mat, overwritten otherwise)
+% 
 % figures are optionally saved to images/ with SAVE_IMG = true.
+% Points for createSVG are optionally saved as csv files with SAVE_POINTS_CSV = true.
 %
 % .inp files are netlist style files read by FastHenry2 by FastFieldSolvers.
 % Reader coil denoted as Coil1, Tag coil denoted as Coil2
 %
 % Uses function files: createCoilPoints.m, EPrint.m, nodePrint.m, saveImages.m
 %
-% fastH_tmswrite.m created by Thomas Sharratt Copyright (C) 2024
+% fastHwrite.m created by Thomas Sharratt Copyright (C) 2024
 % from: fasthenry_write.m from Imperial College ELEC70101 Sensors Coursework
 
 
@@ -28,7 +30,7 @@ TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'indiv-coils', filesep]
 EXT_FOLDER = ['offset-test6', filesep];
 SHOW_FIGURES = true; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
-SAVE_POINTS_CSV = true;
+SAVE_POINTS_CSV = true; % save two csv files (x & y) for use with createSVG (svg_coil.py)
 % v puts each file into a subfolder - can only be used with multiple offset values
 USE_SUBFOLDERS = false;
 
@@ -44,6 +46,7 @@ boardThickness = [-1.6 0.1];
 freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all files)
 
 % Coil1 is "normalised" at (0, 0, 0)
+OFFSET_DP = 1; % set number of decimal points in offset values
 % set of offsets for coil2 (x,y,z). Creates one file for each offset triplet given
 % e.g. two pairs: [0 0 5; 1 0 5] - coil2 at y=0, z=5, moves from x=0 -> x=1
 offset2 = [0 0 5];
@@ -63,7 +66,6 @@ offset2 = [0 0 5];
 ##offset2 = transpose([offsetX; offsetY; offsetZ]);
 ##offsetY = zeros(size(offsetZ));
 
-OFFSET_DP = 1; % accuracy of offset in decimal places
 % < END OF user defined
 
 % Setup bits
@@ -181,7 +183,8 @@ if (SAVE_IMG && SHOW_FIGURES)
   saveImages();
 endif
 
-% saves x and y points into a CSV, crops underneath ones.
+% saves x and y points into a CSV for use with createSVG
+% crops underneath ones - first few that bring port from centre to bottom middle via back of board
 if (SAVE_POINTS_CSV)
   svgFolder = ['..', filesep 'createSVG', filesep];
   csvwrite([svgFolder, "coil_points_x.csv"], x1(4:end));

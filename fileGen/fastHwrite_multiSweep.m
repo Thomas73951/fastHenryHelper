@@ -3,6 +3,11 @@ close all
 clc
 
 % <Created for Octave on Arch Linux & Windows>
+% CREATES MULTIPLE SWEEPS - setup X sweeps in USER DEFINED for the X function calls of makeFiles()
+% MODIFIED FROM fastHWrite.m by Thomas Sharratt for the application of creating a set of sweeps
+% Use in conjunction with automatedMultiHenry.vbs
+% 
+% fastHwrite.m front matter:
 % Creates a set of swept .inp files with two coils with specified:
 % spacing, inner diameter, turn count, trace width, z position, and offset.
 % Offset as matrix of x rows of x,y value pairs.
@@ -17,8 +22,9 @@ clc
 %
 % Uses function files: createCoilPoints.m, EPrint.m, nodePrint.m, saveImages.m
 %
-% fastH_tmswrite.m created by Thomas Sharratt Copyright (C) 2024
-% from: fasthenry_write.m from Imperial College ELEC70101 Sensors Coursework
+% fastH_multiSweep.m created by Thomas Sharratt Copyright (C) 2024
+% from: fastHwrite.m created by Thomas Sharratt Copyright (C) 2024
+%       from: fasthenry_write.m from Imperial College ELEC70101 Sensors Coursework
 
 
 %% USER DEFINED >
@@ -42,20 +48,9 @@ boardThickness = [-1.6 0.1];
 freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all files)
 
 % Coil1 is "normalised" at (0, 0, 0)
+OFFSET_DP = 1; % set number of decimal points in offset values
 % set of offsets for coil2 (x,y,z). Creates one file for each offset triplet given
-% e.g. two pairs: [0 0 5; 1 0 5] - coil2 at y=0, z=5, moves from x=0 -> x=1
-##offset2 = [0 0 0];
-##offset2 = [0 0; 1 0; 2 0];
-##offsetX = linspace(0, 20, 101); % x sweep
-##offsetY = zeros(size(offsetX));
-##offsetZ = 5 * ones(size(offsetX));
-##offset2 = transpose([offsetX; offsetY; offsetZ]);
-
-##offsetY = linspace(0, 20, 101); % y sweep
-##offsetX = zeros(size(offsetY));
-##offsetZ = 5 * ones(size(offsetX));
-##offset2 = transpose([offsetX; offsetY; offsetZ]);
-
+% e.g. two pairs: [0 0 5; 1 0 5] - coil2 at y=0, z=5, moves from x=0 -> x=
 
 offsetZ = linspace(1, 41, 101); % sweepA - z sweep
 offsetX = zeros(size(offsetZ));
@@ -79,11 +74,10 @@ sweepD = transpose([offsetX; offsetY; offsetZ]);
 offsetZ = 40 * ones(size(offsetX));
 sweepE = transpose([offsetX; offsetY; offsetZ]);
 
-
-OFFSET_DP = 1; % accuracy of offset in decimal places
 % < END OF user defined
 
-% Setup bits
+
+% Setup bits - folder structure
 coil1Folder = ['C1_T', num2str(turns(1)), '_ID', num2str(id(1)), ...
                '_S', num2str(s(1)), '_W', num2str(traceWidth(1)), filesep]
 coil2Folder = ['C2_T', num2str(turns(2)), '_ID', num2str(id(2)), ...
@@ -98,6 +92,7 @@ if any(gap < 0)
 endif
 
 
+% creates .inp files like in fastHwrite.m but as a function call for multiple sweeps for each offset2 matrix.
 function makeFiles(writeFolder, USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, offset2, offsetDP)
   numOffsets = size(offset2, 1)
   N1Min = 1;
@@ -213,17 +208,17 @@ endfunction
 % function calls
 
 % Sweep A
+%makeFiles(writeFolder,                     USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, offset2,offsetDP )
 makeFiles([writeFolder, 'Sweep1', filesep], USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, sweepA, OFFSET_DP)
 
-% Sweep A
+% Sweep B
 makeFiles([writeFolder, 'Sweep2', filesep], USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, sweepB, OFFSET_DP)
 
-% Sweep A
+% Sweep C
 makeFiles([writeFolder, 'Sweep3', filesep], USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, sweepC, OFFSET_DP)
 
-% Sweep A
+% Sweep D
 makeFiles([writeFolder, 'Sweep4', filesep], USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, sweepD, OFFSET_DP)
 
-% Sweep A
+% Sweep E
 makeFiles([writeFolder, 'Sweep5', filesep], USE_SUBFOLDERS, SHOW_FIGURES, SAVE_IMG, s, id, turns, traceWidth, portSpacing, boardThickness, freqSweep, sweepE, OFFSET_DP)
-

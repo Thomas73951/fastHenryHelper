@@ -3,12 +3,19 @@ close all
 clc
 
 % <Created for Octave on Arch Linux & Windows>
+% DEPRECATED USE plottingMultiHenry_stdSweep.m for new file structure
+% 
+% plottingMultiHenry_stdSweep.m:
+% results/coil1folder/coil2folder/SweepX_inductances.csv
+% This file (plottingMultiHenry.m):
+% results/.../<FILE_NAME_PART_INDUCTANCES>_SweepX_inductances.csv
+
 % Plotting for fastHenry results in csv file created by fasthenryhelper/automatedhenry/
 % Requires a sweep over an offset direction.
 %
 % Uses function file: saveImages.m
 %
-% plottingHenry.m created by Thomas Sharratt Copyright (C) 2024
+% plottingMultiHenry.m created by Thomas Sharratt Copyright (C) 2024
 
 
 %% USER DEFINED >
@@ -24,7 +31,7 @@ for i = 1:5
   %% Read csv file
   csvFileName = [FILE_NAME_PART_INDUCTANCES, '_Sweep', num2str(i), '_inductances.csv'];
   data = csvread([READ_FOLDER, csvFileName]);
-  sweepX = data(:,2); % requires comma separated folder name: ".../Offset,x,y/"
+  sweepX = data(:,2); % requires comma separated folder name: ".../Offset,x,y,z/"
   sweepY = data(:,3);
   sweepZ = data(:,4);
   L1 = data(:,6);
