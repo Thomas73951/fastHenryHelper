@@ -28,6 +28,7 @@ TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'indiv-coils', filesep]
 EXT_FOLDER = ['offset-test6', filesep];
 SHOW_FIGURES = true; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
+SAVE_POINTS_CSV = true;
 % v puts each file into a subfolder - can only be used with multiple offset values
 USE_SUBFOLDERS = false;
 
