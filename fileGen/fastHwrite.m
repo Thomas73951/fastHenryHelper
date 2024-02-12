@@ -10,7 +10,7 @@ clc
 % .inp file is saved to writeFolder with an name generated from parameters,
 % and optionally each file is put into its own subfolder...
 % (due to how fastHenry saves Zc.mat, overwritten otherwise)
-% 
+%
 % figures are optionally saved to images/ with SAVE_IMG = true.
 % Points for createSVG are optionally saved as csv files with SAVE_POINTS_CSV = true.
 %
@@ -27,18 +27,18 @@ clc
 % n.b. file name is auto generated
 ##TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep];
 TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'indiv-coils', filesep]
-EXT_FOLDER = ['offset-test6', filesep];
-SHOW_FIGURES = true; % optionally supress figure opening, creates .inp files only
+EXT_FOLDER = ['offset-test9', filesep];
+SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
-SAVE_POINTS_CSV = true; % save two csv files (x & y) for use with createSVG (svg_coil.py)
+SAVE_POINTS_CSV = false; % save two csv files (x & y) for use with createSVG (svg_coil.py)
 % v puts each file into a subfolder - can only be used with multiple offset values
 USE_SUBFOLDERS = false;
 
 % units in mm.
-s = [0.8 0.1]; % spacing
-id = [43 0.2]; % inner diameter
-turns = [5 20]; % number of complete turns
-traceWidth = [0.2 0.03]; % trace width
+s = [1.3 0.1]; % spacing
+id = [10 0.2]; % inner diameter
+turns = [16 20]; % number of complete turns
+traceWidth = [0.4 0.03]; % trace width
 portSpacing = [1 0.1]; % x spacing of ports brought to bottom middle of coil
 % v z offset of trace to bring ports to bottom middle of coil...
 %   i.e. trace on other side of pcb therefore pcb board thickness.
@@ -180,7 +180,7 @@ endif
 
 % save all figures
 if (SAVE_IMG && SHOW_FIGURES)
-  saveImages();
+  saveImages("images/");
 endif
 
 % saves x and y points into a CSV for use with createSVG
@@ -190,3 +190,15 @@ if (SAVE_POINTS_CSV)
   csvwrite([svgFolder, "coil_points_x.csv"], x1(4:end));
   csvwrite([svgFolder, "coil_points_y.csv"], y1(4:end));
 endif
+
+xL = 0;
+yL = 0;
+for i = 2:size(x1,2)
+  xL = xL + abs(x1(i) - x1(i-1));
+  yL = yL + abs(y1(i) - y1(i-1));
+endfor
+coilLength = (xL + yL) / 1e3
+
+rho = 1.7e-8;
+CSA = 35e-6 * 0.4e-3;
+R = (rho * coilLength) / CSA
