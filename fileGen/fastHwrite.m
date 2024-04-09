@@ -26,18 +26,18 @@ clc
 %% USER DEFINED >
 % n.b. file name is auto generated
 ##TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep];
-TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'indiv-coils', filesep]
-EXT_FOLDER = ['offset-test9', filesep];
+TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'mesh', filesep]
+EXT_FOLDER = ['CoilA', filesep, 'z23', filesep];
 SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
 SAVE_POINTS_CSV = false; % save two csv files (x & y) for use with createSVG (svg_coil.py)
 % v puts each file into a subfolder - can only be used with multiple offset values
-USE_SUBFOLDERS = false;
+USE_SUBFOLDERS = true;
 
 % units in mm.
-s = [1.3 0.1]; % spacing
-id = [10 0.2]; % inner diameter
-turns = [16 20]; % number of complete turns
+s = [1.0 0.1]; % spacing
+id = [40 0.2]; % inner diameter
+turns = [5 20]; % number of complete turns
 traceWidth = [0.4 0.03]; % trace width
 portSpacing = [1 0.1]; % x spacing of ports brought to bottom middle of coil
 % v z offset of trace to bring ports to bottom middle of coil...
@@ -49,12 +49,8 @@ freqSweep = "fmin = 1e4 fmax  = 1e7 ndec = 1"; % set frequency setpoint(s) (all 
 OFFSET_DP = 1; % set number of decimal points in offset values
 % set of offsets for coil2 (x,y,z). Creates one file for each offset triplet given
 % e.g. two pairs: [0 0 5; 1 0 5] - coil2 at y=0, z=5, moves from x=0 -> x=1
-offset2 = [0 0 5];
+##offset2 = [0 0 5];
 ##offset2 = [0 0; 1 0; 2 0];
-##offsetX = linspace(0, 20, 101); % x sweep
-##offsetY = zeros(size(offsetX));
-##offsetZ = 5 * ones(size(offsetX));
-##offset2 = transpose([offsetX; offsetY; offsetZ]);
 
 ##offsetY = linspace(0, 20, 101); % y sweep
 ##offsetX = zeros(size(offsetY));
@@ -65,6 +61,36 @@ offset2 = [0 0 5];
 ##offsetX = zeros(size(offsetZ));
 ##offset2 = transpose([offsetX; offsetY; offsetZ]);
 ##offsetY = zeros(size(offsetZ));
+
+% xy sweep
+##zval = 4;
+##offsetX = linspace(0, 40, 101); % x sweep
+##offsetY = offsetX; #zeros(size(offsetX));
+##offsetZ = zval * ones(size(offsetX));
+##offset2 = transpose([offsetX; offsetY; offsetZ]);
+
+% "mesh" sweep
+a = linspace(0, 40, 41);
+zval = 23;
+##zval = 0.1;
+offsetX = [];
+offsetY = [];
+offsetZ = [];
+numpoints = columns(a)
+% generates all for x > 0, y > 0 (one quadrant)
+% NOT DOING: and also x => y,
+% roughly 1/8 of state space. Possible because coil is square so abusing symmetry
+for i = 1:numpoints % for x
+  for j = 1:numpoints % for y
+##    if (!(a(j)>a(i))) % "!(y > x)" takes 1/8 of space rather than one quadrant
+    offsetX = [offsetX, a(i)];
+    offsetY = [offsetY, a(j)];
+    offsetZ = [offsetZ, zval];
+##    endif
+  endfor
+endfor
+offset2 = transpose([offsetX; offsetY; offsetZ]);
+
 
 % < END OF user defined
 
