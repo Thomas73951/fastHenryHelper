@@ -27,23 +27,49 @@ coilsFolderName = "offset-x-0-20-101-z5" ' no "\"
 ' TEST FILE SETUP
 ' Extract script path from ScriptFullName Property
 pathPos = InstrRev(Wscript.ScriptFullName, Wscript.ScriptName)
-path = left(Wscript.ScriptFullName, pathPos-1)
+path = left(Wscript.ScriptFullName, pathPos-2)
+path = left(path, InStrRev(path, "\")) ' PATH points to root git folder "....fastHenryHelper/"
 ' setup folder of test files
 Set objFSO = CreateObject("Scripting.FileSystemObject")
-testFilesFolder = path + "testfiles\offsetcoils\"
+testFilesFolder = path + "testfiles\experimental-comparison\CoilA\"
+Wscript.echo testFilesFolder
 Set objFolder = objFSO.GetFolder(testFilesFolder + coilsFolderName + "\")
 Wscript.echo objFolder
 Set colFiles = objFolder.Files
 
-' OUTPUT FILE SETUP
+' SETUP OUTPUT FOLDER
+resultsFolder = "results\experimental-comparison\CoilA\" ' no path
+outputFolder = path + resultsFolder
+resultsFolderName = left(resultsFolder, len(resultsFolder) - 1) ' removes last "\"
+
+' create output folder path if it doesn't exist
+Dim outputFolderfso, pathBuild
+Set outputFolderfso = CreateObject("Scripting.FileSystemObject")
+folders = Split(resultsFolderName, "\")
+pathbuild = path
+' WScript.echo pathbuild
+For i = 0 To UBound(folders)
+    pathBuild = outputFolderfso.BuildPath(pathBuild, folders(i))
+    ' WScript.echo "pathbuild: " & pathBuild
+    If NOT outputFolderfso.FolderExists(pathBuild) Then
+        ' WScript.echo "Didn't exist, creating"
+        outputFolderfso.CreateFolder(pathBuild)
+        If Err Then
+            Err.Clear
+            strErr = SPOFOLDERFAIL
+            rCode = 4
+        End If
+    End If
+Next
+
+' OUTPUT CSV FILE SETUP
 Dim fso, OutputFile
-' Create a FileSystemObject  
 Set fso = CreateObject("Scripting.FileSystemObject")
-' Create text file to output test data
-outputFolder = path + "testfiles\"
+
 outputFileName = outputFolder + coilsFolderName + "_inductances.csv"
 Wscript.echo outputFileName
 Set OutputFile = fso.CreateTextFile(outputFileName, True)
+
 
 ' REGEX - INP FILES ONLY
 Set regexINP = New RegExp
