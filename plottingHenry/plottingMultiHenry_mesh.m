@@ -22,7 +22,7 @@ clc
 
 
 READ_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, 'CoilA', filesep];
-SWEEP_FOLDER = ['z23', filesep];
+SWEEP_FOLDER = ['z4', filesep];
 
 
 SAVE_IMG = false; % save figures in images folder
@@ -70,7 +70,10 @@ Mmesh = horzcat(flip(Mmesh(:,2:end), 2), Mmesh);
 Mmesh = vertcat(flip(Mmesh(2:end,:), 1), Mmesh);
 
 figure()
-contourf(xaxis,yaxis,Mmesh*1e9)
+surface(xaxis,yaxis,Mmesh*1e9)
+colormap("turbo")
+colorbar()
+##view([0 90])
 xlabel("x [mm]")
 ylabel("y [mm]")
 zlabel("Mutual Inductance [nH]")
@@ -79,8 +82,8 @@ zlabel("Mutual Inductance [nH]")
 
 % calculate coupling factor (k)
 
-L1Avg = mean(L1);
-L2Avg = mean(L2);
+L1Avg = mean(L1)
+L2Avg = mean(L2)
 
 kmesh = Mmesh / sqrt(L1Avg.*L2Avg);
 
@@ -88,11 +91,15 @@ kmesh = Mmesh / sqrt(L1Avg.*L2Avg);
 L1Text = [num2str(L1Avg * 1e6, "%.02f"), "μH"];
 
 figure()
-mesh(xaxis,yaxis,kmesh)
-##mesh(xaxis,yaxis,abs(kmesh))
+surface(xaxis,yaxis,kmesh)
+##surface(xaxis,yaxis,abs(kmesh))
+colormap("turbo")
+##caxis([0 max(max(kmesh))])
+colorbar()
 xlabel("x [mm]")
 ylabel("y [mm]")
 zlabel("Coupling Factor [k]")
+##clabel("Coupling Factor [k]")
 
 
 ##
