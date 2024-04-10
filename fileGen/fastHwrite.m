@@ -226,5 +226,5 @@ endfor
 coilLength = (xL + yL) / 1e3
 
 rho = 1.7e-8;
-CSA = 35e-6 * 0.4e-3;
+CSA = 35e-6 * (traceWidth(1)/1e3);
 R = (rho * coilLength) / CSA
