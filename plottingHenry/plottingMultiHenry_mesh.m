@@ -20,12 +20,11 @@ clc
 %% USER DEFINED >
 % Read folder is top folder containing sweep folders.
 
-
 READ_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, 'CoilA', filesep];
-SWEEP_FOLDER = ['z4', filesep];
+SWEEP_TEXT = '23';
+SWEEP_FOLDER = ["z", SWEEP_TEXT, filesep];
 
-
-SAVE_IMG = false; % save figures in images folder
+SAVE_IMG = true; % save figures in images folder
 IMG_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, '1',  filesep];
 ##PLOT_MARKER = '-'; % global plot marker for this script
 ##LINE_WIDTH = 1.5;
@@ -70,14 +69,16 @@ Mmesh = horzcat(flip(Mmesh(:,2:end), 2), Mmesh);
 Mmesh = vertcat(flip(Mmesh(2:end,:), 1), Mmesh);
 
 figure()
-surface(xaxis,yaxis,Mmesh*1e9)
+contourf(xaxis,yaxis, abs(Mmesh)*1e9, 100, 'linestyle', 'none')
+axis square
 colormap("turbo")
-colorbar()
+colorbar
 ##view([0 90])
 xlabel("x [mm]")
 ylabel("y [mm]")
 zlabel("Mutual Inductance [nH]")
-
+title(["Mutual Inductance [nH] at z = ", SWEEP_TEXT]);
+##caxis([0 25])
 
 
 % calculate coupling factor (k)
@@ -91,54 +92,21 @@ kmesh = Mmesh / sqrt(L1Avg.*L2Avg);
 L1Text = [num2str(L1Avg * 1e6, "%.02f"), "μH"];
 
 figure()
-surface(xaxis,yaxis,kmesh)
+contourf(xaxis,yaxis,abs(kmesh), 100, 'linestyle', 'none')
 ##surface(xaxis,yaxis,abs(kmesh))
 colormap("turbo")
-##caxis([0 max(max(kmesh))])
-colorbar()
+caxis([0 max(max(kmesh))])
+##caxis([0 0.06])
+colorbar
+axis square
 xlabel("x [mm]")
 ylabel("y [mm]")
 zlabel("Coupling Factor [k]")
-##clabel("Coupling Factor [k]")
+title(["Abs(Coupling Factor) [k] at z = ", SWEEP_TEXT]);
 
 
-##
-##
-##
-##
-##%% Plotting
-##
-##% M
-##figure()
-##grid on
-##hold on
-##contourf(, M, PLOT_MARKER, 'DisplayName', ['M ', coil1NameText, L1Text], 'LineWidth', LINE_WIDTH)
-##legend('FontSize',11, 'Interpreter', 'none')
-##% xlim([sweepVar(1), sweepVar(end)])
-##xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
-##ylabel("Inductance [H]")
-##title(['Mutual Inductance Swept Over ', sweepAxis, "-axis\n", constCoords, coil2NameText], 'Interpreter', 'none')
-##
-##
-##% K
-##figure()
-##grid on
-##hold on
-##plot(sweepVar, k, PLOT_MARKER, 'DisplayName', ['k ', coil1NameText, L1Text], 'LineWidth', LINE_WIDTH)
-##legend('FontSize',11, 'Interpreter', 'none')
-##% xlim([sweepVar(1), sweepVar(end)])
-##xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
-##ylabel("Coupling Factor []")
-##title(['Coupling Factor (k) Swept Over ', sweepAxis, "-axis\n", constCoords, coil2NameText], 'Interpreter', 'none')
-##
-##
-##endfor
-##
-##
-##
-##
-##
-##%% save figures?
-##if (SAVE_IMG)
-##  saveImages(IMG_FOLDER);
-##endif
+
+%% save figures?
+if (SAVE_IMG)
+  saveImages(IMG_FOLDER);
+endif
