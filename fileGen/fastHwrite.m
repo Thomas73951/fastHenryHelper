@@ -150,12 +150,18 @@ for iterINP = 1:numOffsets
     figure(iterINP*2-1)
     grid
     hold
-    plot(x1, y1, '-x', 'DisplayName', 'Coil')
-    xlim([(min(x1) - 1), (max(x1) + 1)])
-    ylim([(min(y1) - 1), (max(y1) + 1)])
-    legend('FontSize',11)
-    title(['Coil 1, z = 0, W = ', num2str(traceWidth(1)), ...
-           ' [dimensions in mm]'])
+    plot(x1, y1, 'x', 'color', [0, 0.4470, 0.7410], 'DisplayName', 'Nodes')
+    plot(x1, y1, 'b-', 'color', [0, 0.4470, 0.7410], 'DisplayName', 'Node Connections')
+    limMin1 = min([min(x1) min(y1)]);
+    limMax1 = max([min(x1) max(y1)]);
+    xlim([(limMin1 - 5), (limMax1 + 5)])
+    ylim([(limMin1 - 5), (limMax1 + 5)])
+    axis square
+    xlabel("x [mm]")
+    ylabel("y [mm]")
+    legend('orientation', 'horizontal')#'FontSize',11)
+    title(['Coil 1: W = ', num2str(traceWidth(1)), ...
+           ', Offset=(0, 0, 0)'])
   endif
   % turn set of x,y values into fasthenry nodes
   N1Max = size(x1,2);
@@ -173,14 +179,20 @@ for iterINP = 1:numOffsets
     figure(iterINP*2)
     grid
     hold
-    plot(x2, y2, '-x', 'DisplayName', 'Coil')
-    xlim([(min(x2) - 0.1), (max(x2) + 0.1)])
-    ylim([(min(y2) - 0.1), (max(y2) + 0.1)])
-    legend('FontSize',11)
-    title(['Coil 2, W = ', num2str(traceWidth(2)), ...
+    plot(x2, y2, 'x', 'color', [0, 0.4470, 0.7410], 'DisplayName', 'Nodes')
+    plot(x2, y2, 'b-', 'color', [0, 0.4470, 0.7410], 'DisplayName', 'Node Connections')
+    limMin2 = min([min(x2) min(y2)]);
+    limMax2 = max([min(x2) max(y2)]);
+    xlim([(limMin2 - 0.5), (limMax2 + 0.5)])
+    ylim([(limMin2 - 0.5), (limMax2 + 0.5)])
+    axis square
+    xlabel("x [mm]")
+    ylabel("y [mm]")
+    legend('orientation', 'horizontal')#'FontSize',11)
+    title(['Coil 2: W = ', num2str(traceWidth(2)), ...
            ', Offset=(', num2str(offset2(iterINP,1)), ',', ...
            num2str(offset2(iterINP,2)), ',', num2str(offset2(iterINP,3)), ...
-           ') [dimensions in mm]'])
+           ')'])
   endif
   % turn set of x,y values into fasthenry nodes
   N2Max = N1Max + size(x2,2);
