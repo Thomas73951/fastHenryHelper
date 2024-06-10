@@ -120,22 +120,22 @@ axis square
 
 hold on
 
-offset = 1.2;
+offset = [0.8 1.5];
 for i = 1:numResults
   if (resultsVal(i) != 100)
     h = plot3(resultsX(i), resultsY(i), 1, 'x', 'markeredgecolor', 'white');
     ##set(0, "defaultlinemarkersize", 10);
     set(h, 'LineWidth', 1.5)
 
-    text(resultsX(i) + offset, resultsY(i) + offset, 1, num2str(resultsVal(i) + GAIN), ...
-         'color', 'white', 'FontSize', 14, 'fontweight', 'bold')
+    text(resultsX(i) + offset(1), resultsY(i) + offset(2), 1, num2str(resultsVal(i) + GAIN), ...
+         'color', 'white', 'fontweight', 'bold') #'FontSize', 14,
   else
     h = plot3(resultsX(i), resultsY(i), 1, 'x', 'markeredgecolor', 'black');
     ##set(0, "defaultlinemarkersize", 10);
     set(h, 'LineWidth', 1.5)
 
-    text(resultsX(i) + offset, resultsY(i) + offset, 1, "NA", ...
-         'color', 'black', 'FontSize', 14, 'fontweight', 'bold')
+    text(resultsX(i) + offset(1), resultsY(i) + offset(2), 1, "NA", ...
+         'color', 'black', 'fontweight', 'bold') # 'FontSize', 14,
   endif
 endfor
 
@@ -146,8 +146,8 @@ zlabel("Coupling Factor [k]")
 title(["Abs(Coupling Factor) [k] at z = ", SWEEP_TEXT, ...
        "\nCompared to Min Power Required for Detection"]);
 legend("Coupling Factor [k]", "Min Antenna Power for Detection [dBm]", ...
-       'color', 'black', 'textcolor', 'white', 'fontsize', 11)
-fixAxes
+       'color', 'black', 'textcolor', 'white')#, 'fontsize', 11)
+##fixAxes
 
 
 %% save figures?

@@ -102,7 +102,7 @@ axis square
 xlabel("x [mm]")
 ylabel("y [mm]")
 zlabel("Coupling Factor [k]")
-title(["Abs(Coupling Factor) [k] at z = ", SWEEP_TEXT]);
+title(["Coupling Factor [k] at z = ", SWEEP_TEXT]);
 
 
 

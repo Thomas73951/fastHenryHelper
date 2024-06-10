@@ -107,7 +107,7 @@ for iCoils = 1:size(COIL1_FOLDER, 1)
       grid on
       hold on
       plot(sweepVar, L1, PLOT_MARKER, 'DisplayName', ['L1 ', constCoords])
-      legend('FontSize',11)
+      legend()#'FontSize',11)
       % xlim([sweepVar(1), sweepVar(end)])
       xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
       ylabel("Inductance [H]")
@@ -122,7 +122,7 @@ for iCoils = 1:size(COIL1_FOLDER, 1)
       grid on
       hold on
       plot(sweepVar, L2, PLOT_MARKER, 'DisplayName', ['L2 ', constCoords])
-      legend('FontSize',11)
+      legend()#'FontSize',11)
       % xlim([sweepVar(1), sweepVar(end)])
       xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
       ylabel("Inductance [H]")
@@ -135,11 +135,11 @@ for iCoils = 1:size(COIL1_FOLDER, 1)
     figure(figNumStart + 2)
     grid on
     hold on
-    plot(sweepVar, M, PLOT_MARKER, 'DisplayName', ['M ', coil1NameText, L1Text], 'LineWidth', LINE_WIDTH)
-    legend('FontSize',11, 'Interpreter', 'none')
+    plot(sweepVar, M*1e9, PLOT_MARKER, 'DisplayName', ['M ', coil1NameText, L1Text], 'LineWidth', LINE_WIDTH)
+    legend('Interpreter', 'none') #'FontSize',11,
     % xlim([sweepVar(1), sweepVar(end)])
     xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
-    ylabel("Inductance [H]")
+    ylabel("Inductance [nH]")
     title(['Mutual Inductance Swept Over ', sweepAxis, "-axis\n", constCoords, coil2NameText], 'Interpreter', 'none')
 
     if (sweepAxis == "z")
@@ -152,7 +152,7 @@ for iCoils = 1:size(COIL1_FOLDER, 1)
     grid on
     hold on
     plot(sweepVar, k, PLOT_MARKER, 'DisplayName', ['k ', coil1NameText, L1Text], 'LineWidth', LINE_WIDTH)
-    legend('FontSize',11, 'Interpreter', 'none')
+    legend('Interpreter', 'none') #'FontSize',11,
     % xlim([sweepVar(1), sweepVar(end)])
     xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
     ylabel("Coupling Factor []")
