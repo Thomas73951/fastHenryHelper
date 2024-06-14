@@ -4,7 +4,7 @@ clc
 
 % <Created for Octave on Arch Linux & Windows>
 % MODIFIED VERSION (SUPERSEDES) of plottingMultiHenry.m
-% STANDARD SWEEP VERSION. Any sweep set is possible but 5 are required without modification 
+% STANDARD SWEEP VERSION. Any sweep set is possible but 5 are required without modification
 % TODO: set num sweeps
 % folder structure (autogen) results/coil1folder/coil2folder/SweepX_inductances.csv
 
@@ -20,10 +20,10 @@ clc
 %% USER DEFINED >
 % Read folder is top folder containing sweep folders.
 READ_FOLDER = ['..', filesep 'results', filesep];
-COIL1_FOLDER = ['C1_T10_ID4_S0.4_W0.2', filesep]
+COIL1_FOLDER = ['C1_T16_ID10_S1.3_W0.4', filesep]
 COIL2_FOLDER = ['C2_T20_ID0.2_S0.1_W0.03', filesep]
 PLOT_L = false;
-SAVE_IMG = true; % save figures in images folder
+SAVE_IMG = false; % save figures in images folder
 PLOT_MARKER = '-'; % global plot marker for this script
 % < END OF user defined
 

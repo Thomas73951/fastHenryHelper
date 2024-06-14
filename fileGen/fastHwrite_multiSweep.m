@@ -6,7 +6,7 @@ clc
 % CREATES MULTIPLE SWEEPS - setup X sweeps in USER DEFINED for the X function calls of makeFiles()
 % MODIFIED FROM fastHWrite.m by Thomas Sharratt for the application of creating a set of sweeps
 % Use in conjunction with automatedMultiHenry.vbs
-% 
+%
 % fastHwrite.m front matter:
 % Creates a set of swept .inp files with two coils with specified:
 % spacing, inner diameter, turn count, trace width, z position, and offset.
@@ -29,7 +29,7 @@ clc
 
 %% USER DEFINED >
 % n.b. file name is auto generated
-TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'offsetcoils', filesep];
+TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'offsetcoilsbiglittle', filesep];
 ##TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'indiv-coils', filesep];
 SHOW_FIGURES = false; % optionally supress figure opening, creates .inp files only
 SAVE_IMG = false; % save figures in images folder
@@ -37,10 +37,10 @@ SAVE_IMG = false; % save figures in images folder
 USE_SUBFOLDERS = true;
 
 % units in mm.
-s = [0.4 0.1]; % spacing
-id = [40 0.2]; % inner diameter
-turns = [10 20]; % number of complete turns
-traceWidth = [0.2 0.03]; % trace width
+s = [1 0.1]; % spacing
+id = [20 0.2]; % inner diameter
+turns = [16 20]; % number of complete turns
+traceWidth = [0.4 0.03]; % trace width
 portSpacing = [1 0.1]; % x spacing of ports brought to bottom middle of coil
 % v z offset of trace to bring ports to bottom middle of coil...
 %   i.e. trace on other side of pcb therefore pcb board thickness.

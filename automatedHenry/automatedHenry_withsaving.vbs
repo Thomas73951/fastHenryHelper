@@ -1,3 +1,4 @@
+' FOR MESH PLOTS
 ' Recursively searches through root folder for .inp files which are then run with FastHenry2
 ' (FastHenry2 writes Zc.mat in the same folder as each .inp file upon completion)
 ' ^ Therefore recommended file structure is one .inp file per folder.
@@ -22,7 +23,7 @@ Dim FastHenry2
 Set FastHenry2 = CreateObject("FastHenry2.Document")
 
 ' Set folder to simulate
-coilsFolderName = "offset-x-0-20-101-z5" ' no "\"
+coilsFolderName = "z16" ' no "\"
 
 ' TEST FILE SETUP
 ' Extract script path from ScriptFullName Property
@@ -31,14 +32,14 @@ path = left(Wscript.ScriptFullName, pathPos-2)
 path = left(path, InStrRev(path, "\")) ' PATH points to root git folder "....fastHenryHelper/"
 ' setup folder of test files
 Set objFSO = CreateObject("Scripting.FileSystemObject")
-testFilesFolder = path + "testfiles\experimental-comparison\CoilA\"
+testFilesFolder = path + "testfiles\mesh\CoilA\"
 Wscript.echo testFilesFolder
 Set objFolder = objFSO.GetFolder(testFilesFolder + coilsFolderName + "\")
 Wscript.echo objFolder
 Set colFiles = objFolder.Files
 
 ' SETUP OUTPUT FOLDER
-resultsFolder = "results\experimental-comparison\CoilA\" ' no path
+resultsFolder = "results\mesh\CoilA\" ' no path
 outputFolder = path + resultsFolder
 resultsFolderName = left(resultsFolder, len(resultsFolder) - 1) ' removes last "\"
 

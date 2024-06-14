@@ -25,7 +25,7 @@ SWEEP_TEXT = '23';
 SWEEP_FOLDER = ["z", SWEEP_TEXT, filesep];
 
 SAVE_IMG = true; % save figures in images folder
-IMG_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, '1',  filesep];
+IMG_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, '2',  filesep];
 ##PLOT_MARKER = '-'; % global plot marker for this script
 ##LINE_WIDTH = 1.5;
 % < END OF user defined
@@ -68,17 +68,17 @@ yaxis = horzcat(flip(-yaxis(2:end)), yaxis);
 Mmesh = horzcat(flip(Mmesh(:,2:end), 2), Mmesh);
 Mmesh = vertcat(flip(Mmesh(2:end,:), 1), Mmesh);
 
-figure()
-contourf(xaxis,yaxis, abs(Mmesh)*1e9, 100, 'linestyle', 'none')
-axis square
-colormap("turbo")
-colorbar
-##view([0 90])
-xlabel("x [mm]")
-ylabel("y [mm]")
-zlabel("Mutual Inductance [nH]")
-title(["Mutual Inductance [nH] at z = ", SWEEP_TEXT]);
-##caxis([0 25])
+##figure()
+##contourf(xaxis,yaxis, abs(Mmesh)*1e9, 100, 'linestyle', 'none')
+##axis square
+##colormap("turbo")
+##colorbar
+####view([0 90])
+##xlabel("x [mm]")
+##ylabel("y [mm]")
+##zlabel("Mutual Inductance [nH]")
+##title(["Mutual Inductance [nH] at z = ", SWEEP_TEXT]);
+####caxis([0 25])
 
 
 % calculate coupling factor (k)
@@ -95,8 +95,8 @@ figure()
 contourf(xaxis,yaxis,abs(kmesh), 100, 'linestyle', 'none')
 ##surface(xaxis,yaxis,abs(kmesh))
 colormap("turbo")
-caxis([0 max(max(kmesh))])
-##caxis([0 0.06])
+##caxis([0 max(max(kmesh))])
+caxis([0 0.051])
 colorbar
 axis square
 xlabel("x [mm]")

@@ -25,14 +25,14 @@ clc
 % Read folder is top folder containing sweep folders.
 
 READ_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, 'CoilA', filesep];
-SWEEP_TEXT = '23';
+SWEEP_TEXT = '13';
 SWEEP_NAME = ["z", SWEEP_TEXT];
 
 % Gain in dB of the system. This is for experimental as power is recorded at the generator.
 GAIN = round(26.7);
 
-SAVE_IMG = true; % save figures in images folder
-IMG_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, '1',  filesep];
+SAVE_IMG = false; % save figures in images folder
+IMG_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, '2',  filesep];
 ##PLOT_MARKER = '-'; % global plot marker for this script
 ##LINE_WIDTH = 1.5;
 % < END OF user defined
@@ -114,7 +114,7 @@ colormap("turbo")
 caxis([0 max(max(kmesh))])
 xlim([-2 40])
 ylim([-2 40])
-caxis([0 0.051])
+##caxis([0 0.051])
 colorbar
 axis square
 

@@ -22,18 +22,21 @@ clc
 %% USER DEFINED >
 % Read folder is top folder containing sweep folders.
 
-KMIN = 0.0053;
+KMIN = 0.0057;
 
-##READ_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, 'CoilA', filesep];
-READ_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, 'CoilC', filesep];
-##SWEEP_TEXT = ['0.1';'1';'2';'3';'4';'5';'6';'7';'8';'9';'10';'13';'15';'17';'19';'21';'23'];
-SWEEP_TEXT = ['4';'8';'13';'23'];
+READ_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, 'CoilA', filesep];
+SWEEP_TEXT = ['0.1';'1';'2';'3';'4';'5';'6';'7';'8';'9';'10';'12';'13';'14';'15';'16';'17';'19';'21';'23'];
+##READ_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, 'CoilC', filesep];
+##SWEEP_TEXT = ['0.1';'1';'2';'3';'4';'5';'6';'8';'10';'13';'15';'17';'19';'21';'23';'25'];
 
-SAVE_IMG = false; % save figures in images folder
-IMG_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, '2',  filesep];
+SAVE_IMG = true; % save figures in images folder
+IMG_FOLDER = ['..', filesep 'results', filesep, 'mesh', filesep, '5',  filesep];
 ##PLOT_MARKER = '-'; % global plot marker for this script
 ##LINE_WIDTH = 1.5;
 % < END OF user defined
+
+TITLE = ["Coil A: Points of k > ", num2str(KMIN)];
+##TITLE = ["Coil C: Points of k > ", num2str(KMIN)];
 
 
 xaxis = linspace(0, 40, 41);
@@ -117,12 +120,17 @@ megaz = vertcat(flip(megaz(2:end,:), 1), megaz);
 
 figure()
 ##surf(xaxis, yaxis, z, 'linestyle', 'none')
-##surf(megaxaxis, megayaxis, megaz, 'linestyle', 'none')
+surf(megaxaxis, megayaxis, megaz, 'linestyle', 'none')
 ##surface(megaxaxis, megayaxis, megaz, 'linestyle', 'none')
-numLevels = max(max(z)) + 2; % with -1 for nada, +2 gives levels of 1 mm
-contourf(megaxaxis, megayaxis, megaz, numLevels, 'linestyle', 'none')
+##numLevels = max(max(z)) + 2; % with -1 for nada, +2 gives levels of 1 mm
+numLevels = 21 + 1;
+##contourf(megaxaxis, megayaxis, megaz, numLevels, 'linestyle', 'none')
+##contourf(megaxaxis, megayaxis, megaz, 23, 'linestyle', 'none')
 
 grid off
+grid on
+view([0 0])
+
 ##surface(xaxis,yaxis,abs(kmesh))
 colormap("turbo")
 ##caxis([0 max(max(kmesh))])
@@ -132,12 +140,14 @@ axis square
 xlabel("x [mm]")
 ylabel("y [mm]")
 zlabel("z [mm]")
-title(["points of k = ", num2str(KMIN), " or better"])
+title(TITLE)
 
 
 ##xlim([-30 30])
 ##ylim([-30 30])
-zlim([0 max(max(megaz))])
+##zlim([0 max(max(megaz))])
+zlim([0 21])
+caxis([-1 21])
 
 %% save figures?
 if (SAVE_IMG)

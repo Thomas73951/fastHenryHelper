@@ -20,16 +20,51 @@ clc
 %% USER DEFINED >
 % Read folder is top folder containing sweep folders.
 READ_FOLDER = ['..', filesep 'results', filesep];
-COIL1_FOLDER = ['C1_T5_ID40_S1_W0.4', filesep;
-                'C1_T7_ID25_S1.9_W0.4', filesep;
-                'C1_T9_ID10_S2.4_W0.4', filesep;
-                'C1_T10_ID5_S2.4_W0.4', filesep;
-                'C1_T9_ID40_S0.6_W0.4', filesep;
-                'C1_T16_ID10_S1.3_W0.4', filesep];
+##COIL1_FOLDER = ['C1_T5_ID40_S1_W0.4', filesep;
+##                'C1_T7_ID25_S1.9_W0.4', filesep;
+##                'C1_T9_ID10_S2.4_W0.4', filesep;
+##                'C1_T10_ID5_S2.4_W0.4', filesep];
+##LEGEND_EXT = ["Coil A (ID40, "; "Coil B (ID25 "; "Coil C (ID10, "; "Coil D (ID5, "];
+##                'C1_T9_ID40_S0.6_W0.4', filesep;
+##                'C1_T16_ID10_S1.3_W0.4', filesep];
+##COIL1_FOLDER = ['C1_T20_ID20_S0.8_W0.2', filesep;
+##                'C1_T40_ID19_S0.4_W0.2', filesep];
+##LEGEND_EXT = ["L_{T20}";"L_{T40}"];
+##COIL1_FOLDER = ['C1_T3_ID15_S8_W5', filesep;
+##                'C1_T3_ID32_S4_W0.2', filesep;
+##                'C1_T3_ID32_S4_W2', filesep;
+##                'C1_T3_ID45_S1_W0.2', filesep];
+##COIL1_FOLDER = ['C1_T10_ID5_S2.4_W0.4', filesep;
+##                'C1_T10_ID10_S2.2_W1.4', filesep;
+##                'C1_T10_ID21_S1.6_W0.8', filesep;
+##                'C1_T10_ID32_S1_W0.2', filesep;
+##                'C1_T10_ID40_S0.4_W0.2', filesep];
+##COIL1_FOLDER = ['C1_T17_ID30_S0.6_W0.2', filesep;
+##                'C1_T20_ID20_S0.8_W0.2', filesep];
+##COIL1_FOLDER = ["C1_T10_ID40_S0.5_W0.4", filesep;
+##                "C1_T10_ID25_S1.35_W0.4", filesep;
+##                "C1_T10_ID10_S2.2_W0.4", filesep];
+##LEGEND_EXT = ["T_{10} (ID40, "; "T_{10} (ID25, ";"T_{10} (ID10, "];
+##COIL1_FOLDER = ["C1_T3_ID40_S2.2_W0.4", filesep;
+##                "C1_T3_ID25_S5.6_W0.4", filesep;
+##                "C1_T3_ID10_S9_W0.4", filesep];
+##LEGEND_EXT = ["T_{3} (ID40, "; "T_{3} (ID25, ";"T_{3} (ID10, "];
+
+COIL1_FOLDER = ["C1_T16_ID20_S1_W0.4", filesep;
+                "C1_T8_ID20_S2_W0.4", filesep];
+
+LEGEND_EXT = ["S_1, T_{16} (ID20, "; "S_2, T_{8} (ID20, "];
+
+
+USE_LEGEND_EXT = true;
+
+SHOW_C2 = false;
+SIMPLE_XAXIS = true;
+
 COIL2_FOLDER = ['C2_T20_ID0.2_S0.1_W0.03', filesep]
 PLOT_L = false;
 SAVE_IMG = true; % save figures in images folder
-IMG_FOLDER = ['..', filesep 'results', filesep, 'overlay-images', filesep, '1',  filesep];
+IMG_FOLDER = ['..', filesep 'results', filesep, 'report-images', filesep, '4',  filesep];
 PLOT_MARKER = '-'; % global plot marker for this script
 LINE_WIDTH = 1.5;
 % < END OF user defined
@@ -73,7 +108,7 @@ for iCoils = 1:size(COIL1_FOLDER, 1)
 
 
     % calculate coupling factor (k)
-    k = M ./ sqrt(L1.*L2);
+    k = abs(M ./ sqrt(L1.*L2));
 
     L1Avg = mean(L1);
     L1Text = [num2str(L1Avg * 1e6, "%.02f"), "μH"];
@@ -135,12 +170,27 @@ for iCoils = 1:size(COIL1_FOLDER, 1)
     figure(figNumStart + 2)
     grid on
     hold on
-    plot(sweepVar, M*1e9, PLOT_MARKER, 'DisplayName', ['M ', coil1NameText, L1Text], 'LineWidth', LINE_WIDTH)
-    legend('Interpreter', 'none') #'FontSize',11,
+    if (USE_LEGEND_EXT)
+##      plot(sweepVar, M/1e-9, PLOT_MARKER, 'DisplayName', ['M ', LEGEND_EXT(iCoils,:), ' (', L1Text, ')'], 'LineWidth', LINE_WIDTH)
+      plot(sweepVar, M/1e-9, PLOT_MARKER, 'DisplayName', ['M ', LEGEND_EXT(iCoils,:), L1Text, ')'], 'LineWidth', LINE_WIDTH)
+    else
+      plot(sweepVar, M/1e-9, PLOT_MARKER, 'DisplayName', ['M ', coil1NameText, L1Text], 'LineWidth', LINE_WIDTH)
+    endif
+    legend()
+##    legend('Interpreter', 'none') #'FontSize',11,
     % xlim([sweepVar(1), sweepVar(end)])
-    xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
+    if (SIMPLE_XAXIS)
+      xlabel([, sweepAxis, " [mm]"])
+    else
+      xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
+    endif
     ylabel("Inductance [nH]")
-    title(['Mutual Inductance Swept Over ', sweepAxis, "-axis\n", constCoords, coil2NameText], 'Interpreter', 'none')
+##    ylim([-20 40])
+    if (SHOW_C2)
+      title(['Mutual Inductance Swept Over ', sweepAxis, "-axis\n", constCoords, coil2NameText], 'Interpreter', 'none')
+    else
+      title(['Mutual Inductance Swept Over ', sweepAxis, "-axis\n", constCoords], 'Interpreter', 'none')
+    endif
 
     if (sweepAxis == "z")
       disp(["Max M (z sweep): ", num2str(max(M))])
@@ -151,12 +201,27 @@ for iCoils = 1:size(COIL1_FOLDER, 1)
     figure(figNumStart + 3)
     grid on
     hold on
-    plot(sweepVar, k, PLOT_MARKER, 'DisplayName', ['k ', coil1NameText, L1Text], 'LineWidth', LINE_WIDTH)
-    legend('Interpreter', 'none') #'FontSize',11,
+    if (USE_LEGEND_EXT)
+##      plot(sweepVar, k, PLOT_MARKER, 'DisplayName', ['k ', LEGEND_EXT(iCoils,:), ' (', L1Text, ')'], 'LineWidth', LINE_WIDTH)
+      plot(sweepVar, k, PLOT_MARKER, 'DisplayName', ['k ', LEGEND_EXT(iCoils,:), L1Text, ')'], 'LineWidth', LINE_WIDTH)
+    else
+      plot(sweepVar, k, PLOT_MARKER, 'DisplayName', ['k ', coil1NameText, L1Text], 'LineWidth', LINE_WIDTH)
+    endif
+    legend()
+##    legend('Interpreter', 'none') #'FontSize',11,
     % xlim([sweepVar(1), sweepVar(end)])
-    xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
+    if (SIMPLE_XAXIS)
+      xlabel([, sweepAxis, " [mm]"])
+    else
+      xlabel(["Sweep over ", sweepAxis, "-axis [mm]"])
+    endif
     ylabel("Coupling Factor []")
-    title(['Coupling Factor (k) Swept Over ', sweepAxis, "-axis\n", constCoords, coil2NameText], 'Interpreter', 'none')
+##    ylim([0 0.0305])
+    if (SHOW_C2)
+      title(['Coupling Factor Swept Over ', sweepAxis, "-axis\n", constCoords, coil2NameText], 'Interpreter', 'none')
+    else
+      title(['Coupling Factor Swept Over ', sweepAxis, "-axis\n", constCoords], 'Interpreter', 'none')
+    endif
 
     if (sweepAxis == "z")
       disp(["Max K (z sweep): ", num2str(max(k))])

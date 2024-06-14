@@ -110,11 +110,8 @@ ylabel("Min Required Power [dBm]")
 ylim([0 30])
 grid on
 legend()
-title("Min Required Power Compared to Coupling Factor at all z setpoints")
+title("Coil A")
 
-
-set (0, "DefaultAxesFontName", "Arial")
-set(0, 'DefaultAxesFontSize', 100)
 
 %% save figures?
 if (SAVE_IMG)

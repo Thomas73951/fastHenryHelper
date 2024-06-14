@@ -1,3 +1,4 @@
+' FOR STANDARD SWEEPS
 ' MODIFIED VERSION OF automatedHenry_withsaving.vbs - Expects root folder to contain 5 sweeps
 ' TODO: read amount of sweeps
 '
@@ -18,7 +19,7 @@
 
 
 ' Set folder to simulate (USER DEFINED)
-coil1Folder = "C1_T10_ID4_S0.4_W0.2\"
+coil1Folder = "C1_T16_ID20_S1_W0.4\"
 coil2Folder = "C2_T20_ID0.2_S0.1_W0.03\"
 ' folder put in fastHenryHelper\results\
 
@@ -41,7 +42,7 @@ End With
 pathPos = InstrRev(Wscript.ScriptFullName, Wscript.ScriptName)
 path = left(Wscript.ScriptFullName, pathPos-2)
 path = left(path, InStrRev(path, "\")) ' PATH points to root git folder "....fastHenryHelper/"
-testFilesFolder = path + "testfiles\offsetcoils\"
+testFilesFolder = path + "testfiles\offsetcoilsbiglittle\"
 ' setup folder of test files
 Set sweepObjFSO = CreateObject("Scripting.FileSystemObject")
 Set sweepObjFolder = sweepObjFSO.GetFolder(testFilesFolder + coil1Folder + coil2Folder)
