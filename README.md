@@ -7,9 +7,7 @@ It does not measure parasitic series resistance or parasitic capacitance, but ot
 
 ---
 
-This repository contains a full workflow for using FastHenry2. The code in this repository provides automation and the ability to run multiple `.inp` files. Note that the original use case is designing reader coils for an inductively coupled RFID system.
-
- This workflow contains the following stages:
+This repository contains a full workflow for using FastHenry2 for the use case of designing reader coils for an inductively coupled RFID system. For other use cases read see [here](#not-making-coils-for-rfid). The code in this repository provides automation and the ability to run multiple `.inp` files  and contains the following stages:
 
 - `.inp` file generation with [fileGen](fileGen/) (Octave)
 - (Optionally) `.svg` file generation for PCB layout with [createSVG](createSVG/) (Python) using points from structures created in [fileGen](fileGen/)
@@ -24,15 +22,16 @@ See READMEs within each folder for more information.
 
 There are three main workflows here with the following codenames:
 - Creating (and simulating) singular files - *SINGLE*
-- Creating a set of sweeps - *SWEEPS*
-- Creating a mesh - *MESH*
+- Creating a set of sweeps - *SWEEPS* - details [here](workflow-SWEEP.md)
+- Creating a mesh - *MESH* - details [here](workflow-MESH.md)
 
 For more information on workflows, firstly read the README in [fileGen](fileGen/).
 
 
 ## Setup
 
-> [!WARNING] While the Octave and Python scripts are generally compatible with both Windows and Linux, FastHenry2 is Windows only.
+> [!WARNING] 
+> While the Octave and Python scripts are generally compatible with both Windows and Linux, FastHenry2 is Windows only.
 
 ### Prerequisites
 

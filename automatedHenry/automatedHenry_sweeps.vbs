@@ -1,8 +1,7 @@
-' FOR STANDARD SWEEPS
-' MODIFIED VERSION OF automatedHenry_withsaving.vbs - Expects root folder to contain 5 sweeps
-' TODO: read amount of sweeps
-'
-' Front matter from automatedHenry_withsaving.vbs:
+' FOR STANDARD SWEEPS (expects 5 sweeps)
+
+' TODO: support any number of sweeps
+' Front matter from automatedHenry_multi.vbs:
 ' Recursively searches through root folder for .inp files which are then run with FastHenry2
 ' (FastHenry2 writes Zc.mat in the same folder as each .inp file upon completion)
 ' ^ Therefore recommended file structure is one .inp file per folder.
@@ -14,7 +13,7 @@
 ' supports two coil files only (untested with others)
 '
 ' Created by Thomas Sharratt Copyright (C) 2024
-' from: automatedHenry_withsaving.vbs by Thomas Sharratt Copyright (C) 2024
+' from: automatedHenry_multi.vbs by Thomas Sharratt Copyright (C) 2024
 ' from: https://stackoverflow.com/questions/5729903/vb-script-error-path-path-not-found800a004c
 
 
