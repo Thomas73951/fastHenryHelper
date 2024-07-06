@@ -27,6 +27,10 @@ There are three main workflows here with the following codenames:
 
 For more information on workflows, firstly read the README in [fileGen](fileGen/).
 
+### Not Making Coils for RFID?
+
+Then here's how this can be modified to be useful.
+
 
 ## Setup
 

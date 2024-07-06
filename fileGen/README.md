@@ -2,7 +2,8 @@
 
 Creates `.inp` files describing one or more structures for FastHenry to simulate. After which, [automatedHenry](../automatedHenry/) is used to automate the simulations.
 
-> [!INFO] The scripts in this folder are designed for use in Octave on Windows or Linux.
+> [!INFO] 
+> The scripts in this folder are designed for use in Octave on Windows or Linux.
 
 
 ## Scripts
@@ -37,7 +38,8 @@ These are functions files used in `fastHwrite.m` scripts and include:
 
 ### `.inp` Files
 
-> [!INFO] FastHenry1 manual which mostly gives information on `.inp` file setup: https://www.fastfieldsolvers.com/Download/FastHenry_User_Guide.pdf
+> [!INFO] 
+> FastHenry1 manual which mostly gives information on `.inp` file setup: https://www.fastfieldsolvers.com/Download/FastHenry_User_Guide.pdf
 
 `.inp` files are netlist style files containing all the nodes and connections for each, along with simulation and wire setup information. The information these file contain includes:
 
@@ -47,6 +49,15 @@ These are functions files used in `fastHwrite.m` scripts and include:
 - How the nodes are connected with syntax `E1 N1 N2  w = 0.4` for a trace of name `E1` connecting `N1` and `N2` with a width of 0.4 (mm) and default height.
 - Which nodes form the ports of each device with syntax `.external N1 N10 coil1` for a two port device of name *coil1* and ports at nodes 1 & 10.
 - Frequency simulation settings with syntax `.freq fmin=1e4 fmax=1e7 ndec=1` for simulations starting at 1 KHz, ending at 10 MHz with one point per decade. Noting that frequency simulations are only relevant when skin depth is modelled. To model skin depth, the options `nhinc` and `nwinc` can be set to greater than one, splitting up the cross section of the trace into different elements. More information in the manual.
+
+#### Example files
+
+Example `.inp` files included in the [FastModel install](../README.md#prerequisites) can be typically found at:
+
+```bash
+C:\Users\Public\Documents\FastFieldSolvers\FastHenry2
+```
+These can be viewed (and run) from FastModel.
 
 ### File/Folder Structures
 
@@ -61,36 +72,10 @@ FileGen employs a few strategies for creating and organising files.
 
 ### Resistance Readout
 
-<!-- resistance measurement from length -->
+This is performed in Octave, where it measures the trace length of the coil created. It uses this and the trace width, a trace height of 35μm (PCB trace), and a resistivity of 1.7e-8, to give the estimated trace resistance. This is a good match to trace resistance measurements derived from KiCad.
 
 
 ### Improvements
 
-<!-- inefficiency when creating tons and tons of files -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Run `fastH_tmswrite.m` with octave (no packages needed) to create files. Then use `automatedHenry` to simulate. -->
-
-<!-- Original script and files from ELEC70101 Sensors Coursework is in `initialScripts/`. -->
-
-<!-- ### excess from when filegen was in university vault under Obsidian.
-
-Location of example files from fasthenry2 on Windows:
-
-```
-C:\Users\Public\Documents\FastFieldSolvers\FastHenry2\Automation\Office
-```
- -->
+Bit inefficient when creating (40^2)*10 files and folders...
+<!-- TODO: inefficiency when creating tons and tons of files -->
