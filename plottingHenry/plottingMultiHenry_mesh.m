@@ -2,15 +2,10 @@ clear all
 close all
 clc
 
-% MODIFIED VERSION OF plottingMultiHenry_stdSweep.m
-% Takes data from multiple coils and plots each sweep on a different plot
-% (plottingMultiHenry_stdSweep.m takes one coil data and groups sweeps by axis (max 3 figs one for x, y and z sweeps))
-% - expects all run with same "standard" sweeps (standard can be anything but consisent across files)
-% STANDARD SWEEP VERSION. SWEEP1 = Z SWEEP, SWEEP2-5 = X SWEEPS AT DIFFERENT Z
+% MESH Plotting, single Z set point.
 
 % <Created for Octave on Arch Linux & Windows>
 % Plotting for fastHenry results in csv file created by fasthenryhelper/automatedhenry/
-% Requires a sweep over an offset direction.
 %
 % Uses function file: saveImages.m
 %

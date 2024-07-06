@@ -2,6 +2,19 @@ Automated running of simulations with FastHenry2 using Visual Basic Scripts (VBS
 
 The scripts here run simulations on all `.inp` files found within a directory or subdirectories. 
 
+
+## Setup and Usage
+
+> [!WARNING]
+> Windows only.
+
+It requires an installation of FastHenry2 (via FastModel bundle, see [here](../README.md#prerequisites)).
+
+To use these scripts, edit them in Notepad++ or similar, then double click to run. 
+
+
+
+
 ### Workflows
 
 - *[SWEEP](../workflow-SWEEP.md)* - [automatedHenry_sweeps.vbs](automatedHenry_sweeps.vbs) - takes a folder containing five sweep folders and simulates them all, returning five `.csv` files.
@@ -22,14 +35,6 @@ C:\Users\Public\Documents\FastFieldSolvers\FastHenry2\Automation
 ### Additional Scripts
 
 Test scripts for each part of the main VBScript scripts are provided in [testscripts](testscripts/).
-
-## Setup and Usage
-
-This can be run on Windows only. 
-
-It requires an installation of FastHenry2 (via FastModel bundle, see [here](../README.md#prerequisites)).
-
-To use these scripts, edit them in Notepad++ or similar, then double click to run. 
 
 
 

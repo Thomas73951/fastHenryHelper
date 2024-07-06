@@ -2,7 +2,6 @@
 
 FastHenry is a 3-D inductance solver originally developed by [M.I.T. for Unix systems](https://www.rle.mit.edu/cpg/research_codes.htm), where the Microsoft Windows port [FastHenry2 from FastFieldSolvers](https://www.fastfieldsolvers.com/fasthenry2.htm) is used here.
 It can be used to measure the inductance of a device, or the mutual inductance between two or more devices. These structures are outlined in  `.inp` files.
-
 It does not measure parasitic series resistance or parasitic capacitance, but other software from FastFieldSolvers may be used.
 
 ---
@@ -10,13 +9,14 @@ It does not measure parasitic series resistance or parasitic capacitance, but ot
 This repository contains a full workflow for using FastHenry2 for the use case of designing reader coils for an inductively coupled RFID system. For other use cases read see [here](#not-making-coils-for-rfid). The code in this repository provides automation and the ability to run multiple `.inp` files  and contains the following stages:
 
 - `.inp` file generation with [fileGen](fileGen/) (Octave)
-- (Optionally) `.svg` file generation for PCB layout with [createSVG](createSVG/) (Python) using points from structures created in [fileGen](fileGen/)
+- (Optionally) `.svg` file generation for PCB layout with [createSVG](createSVG/) (Python) <!-- using points from structures created in [fileGen](fileGen/) -->
 - Automated simulation of FastHenry with [automatedHenry](automatedHenry/) (VBScript)
 - Plotting of results with [plottingHenry](plottingHenry/) (Octave)
 
+See READMEs within each folder (linked for each) for more information.
+
 During this process, files generated are all placed in the top-level folder `testfiles/`, and result CSV files and images are all placed in the top-level folder `results/`.
 
-See READMEs within each folder for more information.
 
 ### Different Workflow Streams
 
@@ -29,13 +29,15 @@ For more information on workflows, firstly read the README in [fileGen](fileGen/
 
 ### Not Making Coils for RFID?
 
-Then here's how this can be modified to be useful.
+TODO: Then here's how this can be modified to be useful.
 
 
 ## Setup
 
 > [!WARNING] 
-> While the Octave and Python scripts are generally compatible with both Windows and Linux, FastHenry2 is Windows only.
+> Operating System: 
+> - FastHenry2 is Windows only.
+> - Octave and Python scripts are generally compatible with both Windows and Linux
 
 ### Prerequisites
 

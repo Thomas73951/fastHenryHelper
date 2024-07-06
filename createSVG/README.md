@@ -2,6 +2,8 @@
 
 This creates SVG files of the coil points for the purpose of recreating the exact structure on a PCB. It creates the points from a set of x,y points from `fileGen`. 
 
+---
+
 To use this:
 - the `SAVE_POINTS_CSV` option in one of the `fastHwrite.m` scripts in [fileGen](../fileGen/) must be enabled.
 - Note the trace width used as this is set manually within [svg_coil.py](svg_coil.py)
