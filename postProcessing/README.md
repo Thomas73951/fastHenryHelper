@@ -1,6 +1,8 @@
 # Post Processing
 
-**DEPRECATED, FUNCTIONALITY IMPLEMENTED INTO `automatedHenry` & `plottingHenry`.**
+Taken from files included with FastModel, however, are not useful. The combination of [automatedHenry](../automatedHenry/) and [plottingHenry](../plottingHenry/) make this redundant.
+
+> [!WARNING] **DEPRECATED, FUNCTIONALITY IMPLEMENTED INTO `automatedHenry` & `plottingHenry`.**
 
 > Compiled on SteamOS 3 (Arch Linux)
 
