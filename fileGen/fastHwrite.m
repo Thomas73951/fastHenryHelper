@@ -25,7 +25,6 @@ close all
 
 %% USER DEFINED >
 % n.b. file name is auto generated
-##TOP_FOLDER = ['..', filesep, 'automatedHenry', filesep 'testfiles', filesep, 'offsetcoils', filesep];
 ##TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'test', filesep]
 ##TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'mesh', filesep]
 TOP_FOLDER = ['..', filesep 'testfiles', filesep, 'threeten', filesep]

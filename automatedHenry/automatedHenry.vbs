@@ -1,4 +1,8 @@
-' SUPERSEDED BY automatedHenry_withsaving.vbs
+' DEPRECATED as it uses testfiles/ folder within this folder rather than from top-level.
+' Could be repurposed for running single files.
+
+
+' SUPERSEDED BY automatedHenry_multi.vbs
 ' 
 ' Created by Thomas Sharratt Copyright (C) 2023
 ' from: listFilesInFolder.vbs by Thomas Sharratt Copyright (C) 2023

@@ -1,4 +1,6 @@
-' FOR MESH PLOTS
+' FOR RUNNING ONE OR MANY FILES
+' SET UP FOR MESH WORKFLOW
+
 ' Recursively searches through root folder for .inp files which are then run with FastHenry2
 ' (FastHenry2 writes Zc.mat in the same folder as each .inp file upon completion)
 ' ^ Therefore recommended file structure is one .inp file per folder.

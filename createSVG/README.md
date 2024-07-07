@@ -1,11 +1,19 @@
 # createSVG
 
-Creates SVG files of coil points from set of x,y points from `fileGen`
+This creates SVG files of the coil points for the purpose of recreating the exact structure on a PCB. It creates the points from a set of x,y points from `fileGen`. 
 
-- also requires trace width - set in coil_svg.py
+---
+
+To use this:
+- the `SAVE_POINTS_CSV` option in one of the `fastHwrite.m` scripts in [fileGen](../fileGen/) must be enabled.
+- Note the trace width used as this is set manually within [svg_coil.py](svg_coil.py)
+- To import the file into KiCad, see [KiCad Import](#import-to-kicad)
 
 
-## Operation
+## Setup and Usage
+
+Requires Python 3 and the package: `drawsvg`.
+Instructions provided for Linux, but setup on Windows is similar.
 
 ### Venv setup (linux)
 
@@ -31,6 +39,6 @@ python svg_coil.py
   - Import scale: 3.7795492028587
   - Group Items: false
 - Rotate (R) as needed and place where desired.
-- With all lines selected, right click -> Create from Selection -> Create Tracks from Selection
-- Hide F.cu layer, reselect coil, delete <- deletes lines in silkscreen layer.
+- With all lines selected, right click -> Create from Selection -> Create Tracks from Selection.
+- Hide F.cu layer, reselect coil, delete (deletes lines in silkscreen layer).
 - done :)
