@@ -29,8 +29,13 @@ For more information on workflows, firstly read the README in [fileGen](fileGen/
 
 ### Not Making Coils for RFID?
 
-TODO: Then here's how this can be modified to be useful.
+Therefore, some new code will be needed to create the desired files. To do this read the notes in the [fileGen README](fileGen/README.md#inp-files) and the manual and example files linked from there. 
 
+[AutomatedHenry](automatedHenry/) expects files containing two structures,. Therefore, the matrix of inductances and mutual inductances it returns will need to be handled differently if there is a different number of structures.
+
+Finally, modifications to plotting scripts in [plottingHenry](plottingHenry/) will be needed if the number of structures differs. 
+
+Otherwise, scripts should work for other use cases.
 
 ## Setup
 

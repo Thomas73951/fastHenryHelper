@@ -69,7 +69,7 @@ FileGen employs a few strategies for creating and organising files.
 
 This is performed in Octave, where it measures the trace length of the coil created. It uses this and the trace width, a trace height of 35μm (PCB trace), and a resistivity of 1.7e-8 Ω⋅m (copper), to give the estimated trace resistance. This is a good match to trace resistance measurements derived from KiCad.
 
-### Improvements
+<!-- ### Improvements
 
 Bit inefficient when creating (40^2)*10 files and folders...
-<!-- TODO: inefficiency when creating tons and tons of files -->
+TODO: inefficiency when creating tons and tons of files -->
